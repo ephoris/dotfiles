@@ -1,0 +1,53 @@
+#!/usr/bin/env sh
+
+case $BLOCK_BUTTON in
+	1) notify-send "Memory hogs" "$(ps axch -o cmd:15,%mem --sort=-%mem | head)" ;;
+	3) notify-send "Memory module" "\- Shows Memory Used/Total.
+- Click to show memory hogs." ;;
+esac
+
+awk -v type=$TYPE '
+/^MemTotal:/ {
+	mem_total=$2
+}
+/^MemFree:/ {
+	mem_free=$2
+}
+/^Buffers:/ {
+	mem_free+=$2
+}
+/^Cached:/ {
+	mem_free+=$2
+}
+/^SwapTotal:/ {
+	swap_total=$2
+}
+/^SwapFree:/ {
+	swap_free=$2
+}
+END {
+	if (type == "swap") {
+		free=swap_free/1024/1024
+		used=(swap_total-swap_free)/1024/1024
+		total=swap_total/1024/1024
+	} else {
+		free=mem_free/1024/1024
+		used=(mem_total-mem_free)/1024/1024
+		total=mem_total/1024/1024
+	}
+	pct=0
+	if (total > 0) {
+		pct=used/total*100
+	}
+	# full text
+	printf("%.1f/%.1fGB (%.f%%)\n", used, total, pct)
+	# color
+	if (pct > 90) {
+		print("#FF0000")
+	} else if (pct > 80) {
+		print("#FFAE00")
+	} else if (pct > 70) {
+		print("#FFF600")
+	}
+}
+' /proc/meminfo

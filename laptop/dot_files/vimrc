@@ -1,1 +1,102 @@
-/home/ndhuynh/.vimrc
+call plug#begin()
+
+Plug 'scrooloose/nerdtree'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'morhetz/gruvbox'
+Plug 'lervag/vimtex'
+Plug 'valloric/youcompleteme'
+Plug 'tpope/vim-surround'
+Plug 'raimondi/delimitmate'
+Plug 'airblade/vim-gitgutter'
+
+call plug#end()
+
+let g:vimtex_compiler_latexmk = {'callback' : 0}
+
+""""""""""""""""""""""
+" Airline
+""""""""""""""""""""""
+let g:airline_theme='gruvbox'
+let g:airline#extensions#tabline#enabled=1
+let g:airline#extensions#tabline#formatter='unique_tail'
+let g:airline_powerline_fonts=1
+
+""""""""""""""""""""""
+" Shortcuts
+""""""""""""""""""""""
+" Map leader allows for extra key combinations (Thanks Harshal)
+let mapleader = ","
+let g:mapleader = ","
+
+" Saving
+nmap <leader>w :w!<cr>
+
+" Closes vim if NERDTree is the only thing open
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q| endif
+
+""""""""""""""""""""""
+" Color and Font
+""""""""""""""""""""""
+" Syntax highlghting
+syntax on
+
+" Number lines
+set number
+
+" Scheme
+set bg=dark
+let g:gruvbox_contrast_dark = 'soft'
+colorscheme gruvbox
+
+
+" Highlight line number which cursor sits
+highlight CursorLine gui=NONE cterm=NONE ctermbg=NONE ctermfg=NONE guibg=NONE guifg=NONE
+set cursorline
+
+set encoding=utf8
+
+""""""""""""""""""""""
+" Text
+""""""""""""""""""""""
+" Tabs to 4 spaces conversion
+set expandtab
+set tabstop=4
+set shiftwidth=4
+
+" Column limits
+set colorcolumn=80
+
+set linebreak
+set nolist
+set nowrap
+
+""""""""""""""""""""""
+" Searching
+""""""""""""""""""""""
+" Highlighted search on
+set hlsearch
+
+" Ignore cases for searching
+set ignorecase
+
+" Makes search act like search in modern browsers
+set incsearch
+
+""""""""""""""""""""""
+" No back ups
+""""""""""""""""""""""
+set nobackup
+set nowb
+set noswapfile
+
+"""""""""""""""""""""""
+" Spell checking
+"""""""""""""""""""""""
+" Pressing ,ss will toggle and untoggle spell checking
+map <leader>ss :setlocal spell!<cr>
+
+" Shortcuts
+map <leader>sn ]s
+map <leader>sn [s
+map <leader>sa zg
