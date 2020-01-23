@@ -12,12 +12,13 @@ floating_modifier $mod
 # Application hotkeys
 bindsym $mod+Return exec termite
 bindsym $mod+Shift+q kill
-bindsym $mod+d exec --no-startup-id rofi -show run -theme gruvbox-dark-soft
+bindsym $mod+space exec --no-startup-id rofi -show drun -theme gruvbox-dark-soft -show-icons
 bindsym $mod+z exec --no-startup-id morc_menu
 bindsym $mod+F2 exec firefox
 bindsym $mod+F3 exec pcmanfm
 bindsym $mod+Shift+F3 exec pcmanfm_pkexec
 bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'restart dunst'"
+bindsym Print --release exec flameshot gui
 
 # Audio
 exec --no-startup-id start-pulseaudio-x11
@@ -66,7 +67,7 @@ bindsym $mod+e layout toggle split
 bindsym $mod+Shift+space floating toggle
 
 # change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
+bindsym $mod+Ctrl+space focus mode_toggle
 
 # toggle sticky
 bindsym $mod+Shift+s sticky toggle
@@ -133,25 +134,21 @@ for_window [title="File Transfer*"] floating enable
 for_window [class="fpakman"] floating enable
 for_window [class="Galculator"] floating enable border pixel 1
 for_window [class="GParted"] floating enable border normal
-for_window [title="i3_help"] floating enable sticky enable border normal
 for_window [class="Lightdm-settings"] floating enable
 for_window [class="Lxappearance"] floating enable sticky enable border normal
 for_window [class="Manjaro-hello"] floating enable
 for_window [class="Manjaro Settings Manager"] floating enable border normal
 for_window [title="MuseScore: Play Panel"] floating enable
 for_window [class="Nitrogen"] floating enable sticky enable border normal
-for_window [class="Oblogout"] fullscreen enable
-for_window [class="octopi"] floating enable
-for_window [title="About Pale Moon"] floating enable
 for_window [class="Pamac-manager"] floating enable
 for_window [class="Pavucontrol"] floating enable
 for_window [class="qt5ct"] floating enable sticky enable border normal
 for_window [class="Qtconfig-qt4"] floating enable sticky enable border normal
-for_window [class="Simple-scan"] floating enable border normal
 for_window [class="(?i)System-config-printer.py"] floating enable border normal
 for_window [class="Timeset-gui"] floating enable border normal
 for_window [class="(?i)virtualbox"] floating enable border normal
 for_window [class="Xfburn"] floating enable
+for_window [class="matplotlib"] floating enable
 
 # switch to workspace with urgent window automatically
 for_window [urgent=latest] focus
@@ -169,7 +166,7 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 bindsym $mod+0 mode "$mode_system"
 set $mode_system (l)ock, (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown
 mode "$mode_system" {
-    bindsym l exec --no-startup-id i3exit lock, mode "default"
+    bindsym l exec --no-startup-id i3lock -t -i ~/.i3/lock_screen.png
     bindsym s exec --no-startup-id i3exit suspend, mode "default"
     bindsym u exec --no-startup-id i3exit switch_user, mode "default"
     bindsym e exec --no-startup-id i3exit logout, mode "default"
@@ -209,10 +206,11 @@ mode "resize" {
 # Autostart applications
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id nitrogen --restore; sleep 1; compton -b
-exec --no-startup-id xautolock -time 10 -locker blurlock
+exec --no-startup-id xautolock -time 10 -locker i3lock -t -i ~/.i3/lock_screen.png
 exec_always --no-startup-id ff-theme-util
 exec_always --no-startup-id fix_xcursor
 exec --no-startup-id xfce4-power-manager
+exec --no-startup-id solaar
 
 # Applets
 exec --no-startup-id sleep 1s; pa-applet
