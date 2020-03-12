@@ -1,0 +1,45 @@
+{
+    "editor.fontFamily": "Fira Code Medium",
+    "editor.fontLigatures": true,
+    "editor.fontSize": 16,
+    "editor.renderWhitespace": "boundary",
+    "editor.tabCompletion": "on",
+    "editor.wordWrap": "off",
+    "[markdown]":{
+        "editor.wordWrap": "off",
+        "editor.quickSuggestions": false
+    },
+    "workbench.iconTheme": "material-icon-theme",
+    "zenMode.hideTabs": false,
+    "latex-workshop.view.pdf.viewer": "tab",
+
+    "vim.handleKeys": {
+        "<C-k>": false,
+        "<C-o>": false,
+        "<C-b>": false,
+    },
+    "C_Cpp.updateChannel": "Insiders",
+    "workbench.colorTheme": "Gruvbox Dark Soft",
+    "workbench.statusBar.visible": true,
+    "latex-workshop.message.update.show": false,
+
+    "editor.tokenColorCustomizations": {
+        "[Gruvbox Dark Soft]": {
+            "textMateRules": [
+                {
+                    "scope": ["source.latex", "keyword.control"],
+                    "settings": {
+                        "foreground": "#fb4934"
+                    }
+                },
+                {
+                    "scope": ["source.latex", "support.function"],
+                    "settings": {
+                        "foreground": "#b8bb26"
+                    }
+                },
+            ]
+        }
+    },
+    "cmake.configureOnOpen": true
+}

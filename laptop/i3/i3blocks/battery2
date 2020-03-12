@@ -16,34 +16,31 @@ use strict;
 use warnings;
 use utf8;
 
+my $acpi;
 my $status;
 my $percent;
+my $ac_adapt;
 my $full_text;
 my $short_text;
+my $bat_number = $ENV{BAT_NUMBER} || 0;
 my $label;
-my @str;
 
-open (PERCENT, "upower -i `upower -e | grep 'BAT'` | grep 'percentage' |") or die;
-$percent = <PERCENT>;
-close(PERCENT);
+# read the first line of the "acpi" command output
+open (ACPI, "acpi -b 2>/dev/null| grep 'Battery $bat_number' |") or die;
+$acpi = <ACPI>;
+close(ACPI);
 
-if (not defined($percent)) {
-    exit(0)
+# fail on unexpected output
+if (not defined($acpi)) {
+    # don't print anything to stderr if there is no battery
+    exit(0);
+}
+elsif ($acpi !~ /: ([\w\s]+), (\d+)%/) {
+	die "$acpi\n";
 }
 
-open (STATUS, "upower -i `upower -e | grep 'BAT'` | grep 'state' |") or die;
-$status = <STATUS>;
-close(STATUS);
-
-if (not defined($status)) {
-    exit(0)
-}
-
-$percent =~ /\s+[\w:]+\s+(\d+)%/;
-$percent = $1;
-# $percent = $str[-1];
-@str = split /\s+/, $status;
-$status = $str[-1];
+$status = $1;
+$percent = $2;
 
 if ($percent < 25) {
     $label = ' ';
@@ -57,20 +54,37 @@ if ($percent < 25) {
 
 $full_text = "$label$percent%";
 
-if ($status eq 'discharging') {
+if ($status eq 'Discharging') {
 	$full_text .= '';
-} elsif ($status eq 'charging') {
+} elsif ($status eq 'Charging') {
 	$full_text .= ' ';
 } elsif ($status eq 'Unknown') {
-    $full_text .= ' ?';
+	open (AC_ADAPTER, "acpi -a |") or die;
+	$ac_adapt = <AC_ADAPTER>;
+	close(AC_ADAPTER);
+
+	if ($ac_adapt =~ /: ([\w-]+)/) {
+		$ac_adapt = $1;
+
+		if ($ac_adapt eq 'on-line') {
+			$full_text .= ' CHR';
+		} elsif ($ac_adapt eq 'off-line') {
+			$full_text .= ' DIS';
+		}
+	}
 }
 
 $short_text = $full_text;
+
+if ($acpi =~ /(\d\d:\d\d):/) {
+	$full_text .= " ($1)";
+}
 
 # print text
 print "$full_text\n";
 print "$short_text\n";
 
+# consider color and urgent flag only on discharge
 if ($status eq 'Discharging') {
 
 	if ($percent < 20) {
