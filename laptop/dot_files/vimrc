@@ -2,13 +2,12 @@ call plug#begin()
 
 Plug 'scrooloose/nerdtree'
 Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'morhetz/gruvbox'
 Plug 'lervag/vimtex'
 Plug 'valloric/youcompleteme'
-Plug 'tpope/vim-surround'
-Plug 'raimondi/delimitmate'
 Plug 'airblade/vim-gitgutter'
+Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'Yggdroot/indentLine'
+Plug 'sainnhe/gruvbox-material'
 
 call plug#end()
 
@@ -17,10 +16,17 @@ let g:vimtex_compiler_latexmk = {'callback' : 0}
 """"""""""""""""""""""
 " Airline
 """"""""""""""""""""""
-let g:airline_theme='gruvbox'
+let g:airline_theme='gruvbox_material'
 let g:airline#extensions#tabline#enabled=1
 let g:airline#extensions#tabline#formatter='unique_tail'
 let g:airline_powerline_fonts=1
+
+""""""""""""""""""""""
+" C++ Highlighting
+""""""""""""""""""""""
+let g:cpp_member_variable_highlight=1
+let g:cpp_class_decl_highlight=1
+let g:cpp_posix_standard=1
 
 """"""""""""""""""""""
 " Shortcuts
@@ -44,10 +50,11 @@ syntax on
 " Number lines
 set number
 
-" Scheme
-set bg=dark
-let g:gruvbox_contrast_dark = 'soft'
-colorscheme gruvbox
+" Color Scheme
+set termguicolors
+set background=dark
+let g:gruvbox_material_background = 'soft'
+colorscheme gruvbox-material
 
 
 " Highlight line number which cursor sits
@@ -70,6 +77,12 @@ set colorcolumn=80
 set linebreak
 set nolist
 set nowrap
+
+" let g:indentLine_concealcursor = ''
+let g:indentLine_leadingSpaceEnabled = 1
+let g:indentLine_leadingSpaceChar = '.'
+autocmd FileType help,nerdtree IndentLinesToggle
+let g:indentLine_fileTypeExclude = ['markdown', 'latex', 'tex']
 
 """"""""""""""""""""""
 " Searching

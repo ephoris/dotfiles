@@ -14,7 +14,7 @@ bindsym $mod+Return exec termite
 bindsym $mod+Shift+q kill
 bindsym $mod+space exec --no-startup-id rofi -show drun -theme gruvbox-dark-soft -show-icons
 bindsym $mod+z exec --no-startup-id morc_menu
-bindsym $mod+F2 exec firefox
+bindsym $mod+F2 exec google-chrome-stable
 bindsym $mod+F3 exec pcmanfm
 bindsym $mod+Shift+F3 exec pcmanfm_pkexec
 bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'restart dunst'"
@@ -70,7 +70,11 @@ bindsym $mod+Shift+space floating toggle
 bindsym $mod+Ctrl+space focus mode_toggle
 
 # toggle sticky
-bindsym $mod+Shift+s sticky toggle
+bindsym $mod+Shift+s sticky toggle; exec notify-send 'toggle sticky'
+
+# toggle floating full screen
+bindsym $mod+y fullscreen disable; floating enable; sticky enable;
+bindsym $mod+Shift+y fullscreen disable; floating disable; sticky disable;
 
 # focus the parent container
 bindsym $mod+a focus parent
@@ -205,12 +209,13 @@ mode "resize" {
 
 # Autostart applications
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec --no-startup-id nitrogen --restore; sleep 1; compton -b
+exec --no-startup-id nitrogen --restore; 
 exec --no-startup-id xautolock -time 10 -locker i3lock -t -i ~/.i3/lock_screen.png
 exec_always --no-startup-id ff-theme-util
 exec_always --no-startup-id fix_xcursor
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id solaar
+# exec_always compton --config ~/.config/compton.conf
 
 # Applets
 exec --no-startup-id sleep 1s; pa-applet
@@ -271,18 +276,18 @@ bar {
 bindsym $mod+m bar mode toggle
 
 # Set inner/outer gaps
-gaps inner 15
+gaps inner 7
 gaps outer 0
-smart_gaps on
+# smart_gaps on
 
 # Smart borders (draw borders around container only if it is not the only container on this workspace) 
 smart_borders on
 
-# client.focused          #b8bb26 #b8bb26 #ebdbb2 #b8bb26 #b8bb26
-# client.focused_inactive #282828 #282828 #ebdbb2 #282828 #282828
-# client.unfocused        #282828 #282828 #ebdbb2 #282828 #282828
-# client.urgent           #282828 #282828 #fb4934 #282828 #282828
-# client.placeholder      #282828 #282828 #ebdbb2 #282828 #282828
+client.focused          #b8bb26 #b8bb26 #ebdbb2 #b8bb26 #b8bb26
+client.focused_inactive #282828 #282828 #ebdbb2 #282828 #282828
+client.unfocused        #282828 #282828 #ebdbb2 #282828 #282828
+client.urgent           #282828 #282828 #fb4934 #282828 #282828
+client.placeholder      #282828 #282828 #ebdbb2 #282828 #282828
 
 # Enable natural scrolling
 exec --no-startup-id xinput set-prop "DLL075B:01 06CB:76AF Touchpad" "libinput Natural Scrolling Enabled" 1
