@@ -7,7 +7,7 @@ Plug 'valloric/youcompleteme'
 Plug 'airblade/vim-gitgutter'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'Yggdroot/indentLine'
-Plug 'sainnhe/gruvbox-material'
+Plug 'morhetz/gruvbox'
 
 call plug#end()
 
@@ -16,7 +16,7 @@ let g:vimtex_compiler_latexmk = {'callback' : 0}
 """"""""""""""""""""""
 " Airline
 """"""""""""""""""""""
-let g:airline_theme='gruvbox_material'
+let g:airline_theme='gruvbox'
 let g:airline#extensions#tabline#enabled=1
 let g:airline#extensions#tabline#formatter='unique_tail'
 let g:airline_powerline_fonts=1
@@ -38,6 +38,13 @@ let g:mapleader = ","
 " Saving
 nmap <leader>w :w!<cr>
 
+
+""""""""""""""""""""""
+" Shortcuts
+""""""""""""""""""""""
+" NERDTree right side by default
+let g:NERDTreeWinPos = "right"
+
 " Closes vim if NERDTree is the only thing open
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q| endif
 
@@ -53,8 +60,7 @@ set number
 " Color Scheme
 set termguicolors
 set background=dark
-let g:gruvbox_material_background = 'soft'
-colorscheme gruvbox-material
+colorscheme gruvbox
 
 
 " Highlight line number which cursor sits
