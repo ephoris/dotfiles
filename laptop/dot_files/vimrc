@@ -7,16 +7,19 @@ Plug 'valloric/youcompleteme'
 Plug 'airblade/vim-gitgutter'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'Yggdroot/indentLine'
+Plug 'sainnhe/gruvbox-material'
 Plug 'morhetz/gruvbox'
+Plug 'sheerun/vim-polyglot'
 
 call plug#end()
 
-let g:vimtex_compiler_latexmk = {'callback' : 0}
+" let g:vimtex_compiler_latexmk = {'callback' : 0}
+let g:tex_flavor = 'plain'
 
 """"""""""""""""""""""
 " Airline
 """"""""""""""""""""""
-let g:airline_theme='gruvbox'
+let g:airline_theme='gruvbox_material'
 let g:airline#extensions#tabline#enabled=1
 let g:airline#extensions#tabline#formatter='unique_tail'
 let g:airline_powerline_fonts=1
@@ -60,7 +63,9 @@ set number
 " Color Scheme
 set termguicolors
 set background=dark
-colorscheme gruvbox
+let g:gruvbox_material_background = 'soft'
+let g:gruvbox_material_disable_italic_comment = 1
+colorscheme gruvbox-material
 
 
 " Highlight line number which cursor sits

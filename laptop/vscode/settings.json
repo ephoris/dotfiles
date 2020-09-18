@@ -1,45 +1,31 @@
 {
-    "editor.fontFamily": "Fira Code Medium",
-    "editor.fontLigatures": true,
-    "editor.fontSize": 16,
-    "editor.renderWhitespace": "boundary",
+    "C_Cpp.updateChannel": "Insiders",
+
+    "workbench.colorTheme": "Gruvbox Material Dark",
+    "gruvboxMaterial.darkContrast": "soft",
+    "workbench.statusBar.visible": true,
+    "workbench.iconTheme": "material-icon-theme",
+
+    "editor.renderWhitespace" :"boundary",
     "editor.tabCompletion": "on",
-    "editor.wordWrap": "off",
+    "editor.wordWrap" : "off",
+    "editor.fontLigatures": true,
+    "editor.fontSize": 14,
     "[markdown]":{
         "editor.wordWrap": "off",
         "editor.quickSuggestions": false
     },
-    "workbench.iconTheme": "material-icon-theme",
-    "zenMode.hideTabs": false,
-    "latex-workshop.view.pdf.viewer": "tab",
 
     "vim.handleKeys": {
         "<C-k>": false,
         "<C-o>": false,
         "<C-b>": false,
     },
-    "C_Cpp.updateChannel": "Insiders",
-    "workbench.colorTheme": "Gruvbox Dark Soft",
-    "workbench.statusBar.visible": true,
-    "latex-workshop.message.update.show": false,
+    "python.showStartPage": false,
+    "autoDocstring.docstringFormat": "sphinx",
+    "latex-workshop.view.pdf.viewer": "tab",
+    "latex-workshop.bibtex-format.tab": "4 spaces",
+    "git.ignoreLegacyWarning": true,
 
-    "editor.tokenColorCustomizations": {
-        "[Gruvbox Dark Soft]": {
-            "textMateRules": [
-                {
-                    "scope": ["source.latex", "keyword.control"],
-                    "settings": {
-                        "foreground": "#fb4934"
-                    }
-                },
-                {
-                    "scope": ["source.latex", "support.function"],
-                    "settings": {
-                        "foreground": "#b8bb26"
-                    }
-                },
-            ]
-        }
-    },
-    "cmake.configureOnOpen": true
+    "zenMode.hideTabs": false
 }
