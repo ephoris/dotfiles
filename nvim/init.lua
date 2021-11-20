@@ -25,6 +25,8 @@ require('packer').startup(function(use)
         requires = 'nvim-lua/plenary.nvim',
     }
 
+    use 'windwp/nvim-autopairs'
+
     use 'neovim/nvim-lspconfig'
     use 'williamboman/nvim-lsp-installer'
 
@@ -36,6 +38,7 @@ require('packer').startup(function(use)
     use 'onsails/lspkind-nvim'
     use 'L3MON4D3/LuaSnip'
     use 'arkav/lualine-lsp-progress'
+
 end)
 
 local o = vim.o
@@ -75,6 +78,17 @@ local key_map = vim.api.nvim_set_keymap
 
 vim.g.mapleader = " "
 key_map('n', '<leader>e', ':NvimTreeToggle<CR>', key_opts)
+key_map('n', '<leader>ff', ':Telescope<CR>', key_opts)
+key_map('n', '<leader>x', ':BufferClose<CR>', key_opts)
+key_map('n', '<leader>t', ':BufferNext<CR>', key_opts)
+key_map('n', '<leader>T', ':BufferPrevious<CR>', key_opts)
+key_map('n', '<leader>-<>', ':BufferMovePrevious<CR>', key_opts)
+key_map('n', '<leader>->>', ':BufferMoveNext<CR>', key_opts)
+key_map('n', '<leader>n', ':tabnew<CR>', key_opts)
+key_map('n', '<leader>s', ':w<CR>', key_opts)
+key_map('n', '<leader>fd', ':Telescope lsp_definitions<CR>', key_opts)
+key_map('n', '<leader>fr', ':Telescope lsp_references<CR>', key_opts)
+key_map('n', '<leader>fb', ':Telescope file_browser<CR>', key_opts)
 
 ------------------------------------------------------------------------------
 -- HEADER indent-blankline
@@ -104,7 +118,7 @@ require('lualine').setup({
     sections = {
         lualine_a = {'mode'},
         lualine_b = {'branch', 'diff',
-                      {'diagnostics', sources={'nvim_lsp', 'coc'}}},
+            {'diagnostics', sources={'nvim_lsp', 'coc'}}},
         lualine_c = {'filename', 'lsp_progress'},
         lualine_x = {'encoding', 'fileformat', 'filetype'},
         lualine_y = {'progress'},
@@ -120,6 +134,19 @@ require('lualine').setup({
     },
     tabline = {},
     extensions = {},
+})
+
+------------------------------------------------------------------------------
+-- HEADER telescope
+------------------------------------------------------------------------------
+require('telescope').setup({
+    defaults = {
+        mapping = {
+            i = {
+                ['<C-h>'] = 'which_key'
+            }
+        }
+    },
 })
 
 ------------------------------------------------------------------------------
@@ -141,11 +168,50 @@ require('nvim-tree').setup({
 })
 
 ------------------------------------------------------------------------------
+-- HEADER nvim-autopairs
+------------------------------------------------------------------------------
+require('nvim-autopairs').setup({
+    disabled_filetypes = {'Telescope-prompt', 'vim'},
+})
+
+------------------------------------------------------------------------------
 -- HEADER lsp
 ------------------------------------------------------------------------------
-
 require('nvim-lsp-installer').on_server_ready(function(server)
-    opts = {}
+    -- Use an on_attach function to only map the following keys
+    -- after the language server attaches to the current buffer
+    local on_attach = function(client, bufnr)
+        local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+        local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+
+        -- Enable completion triggered by <c-x><c-o>
+        buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+        -- Mappings.
+        local opts = { noremap=true, silent=true }
+
+        -- See `:help vim.lsp.*` for documentation on any of the below functions
+        buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+        buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+        buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+        buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+        buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+        buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+        buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+        buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+        buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+        buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+        buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+        buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+        buf_set_keymap('n', '<space>l', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+        buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+        buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+        buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+        buf_set_keymap('n', '<space>F', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+    end
+    opts = {
+        on_attach = on_attach,
+    }
     server:setup(opts)
 end)
 
@@ -161,7 +227,7 @@ local lspkind = require('lspkind')
 cmp.setup({
     snippet = {
         expand = function(args)
-            luasnip.ls_expand(args.body)
+            luasnip.lsp_expand(args.body)
         end,
     },
     formatting = {
@@ -189,6 +255,19 @@ cmp.setup({
                 fallback()
             end
         end, { "i", "s" }),
+
+        ['<C-space>'] = cmp.mapping(cmp.mapping.complete(), {'i', 'c'}),
+
+        ['<CR>'] = cmp.mapping({
+            i = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false }),
+            c = function(fallback)
+                if cmp.visible() then
+                    cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
+                else
+                    fallback()
+                end
+            end
+        }),
     },
     sources = cmp.config.sources({
         { name = 'nvim_lsp' },
@@ -197,3 +276,6 @@ cmp.setup({
         { name = 'path' },
     })
 })
+
+local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+cmp.event:on( 'confirm_done', cmp_autopairs.on_confirm_done({  map_char = { tex = '' } }))
