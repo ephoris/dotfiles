@@ -1,5 +1,6 @@
 local install_path = vim.fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
 
+
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
     vim.fn.execute('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
 end
@@ -17,6 +18,7 @@ require('packer').startup(function(use)
     use 'romgrk/barbar.nvim'
     use 'kyazdani42/nvim-tree.lua'
 
+    use 'cormacrelf/dark-notify'
     use 'lukas-reineke/indent-blankline.nvim'
     use 'nvim-lualine/lualine.nvim'
 
@@ -26,6 +28,8 @@ require('packer').startup(function(use)
     }
 
     use 'windwp/nvim-autopairs'
+    use 'akinsho/toggleterm.nvim'
+    use 'lervag/vimtex'
 
     use 'neovim/nvim-lspconfig'
     use 'williamboman/nvim-lsp-installer'
@@ -35,7 +39,6 @@ require('packer').startup(function(use)
     use 'hrsh7th/cmp-path'
     use 'hrsh7th/cmp-cmdline'
     use 'hrsh7th/nvim-cmp'
-    use 'onsails/lspkind-nvim'
     use 'L3MON4D3/LuaSnip'
     use 'arkav/lualine-lsp-progress'
 
@@ -47,7 +50,8 @@ local cmd = vim.cmd
 o.mouse = 'a'
 
 o.termguicolors = true
-o.background = 'dark'
+vim.g.gruvbox_contrast_light = 'hard'
+vim.g.gruvbox_transparent_bg = 1
 cmd([[colorscheme gruvbox]])
 
 o.number = true
@@ -59,6 +63,7 @@ o.tabstop = 4
 o.softtabstop = 4
 o.shiftwidth = 4
 o.smartindent = true
+o.hidden = true
 
 o.colorcolumn = '80'
 o.textwidth = 80
@@ -91,9 +96,14 @@ key_map('n', '<leader>fr', ':Telescope lsp_references<CR>', key_opts)
 key_map('n', '<leader>fb', ':Telescope file_browser<CR>', key_opts)
 
 ------------------------------------------------------------------------------
+-- HEADER dark-notify
+------------------------------------------------------------------------------
+require('dark_notify').run()
+
+------------------------------------------------------------------------------
 -- HEADER indent-blankline
 ------------------------------------------------------------------------------
-vim.o.list = true
+o.list = true
 vim.opt.listchars:append('lead:⋅')
 
 require("indent_blankline").setup({
@@ -175,12 +185,12 @@ require('nvim-autopairs').setup({
 })
 
 ------------------------------------------------------------------------------
--- HEADER lsp
+-- HEADER lsp-installer
 ------------------------------------------------------------------------------
 require('nvim-lsp-installer').on_server_ready(function(server)
     -- Use an on_attach function to only map the following keys
     -- after the language server attaches to the current buffer
-    local on_attach = function(client, bufnr)
+    local on_attach = function(_, bufnr)
         local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
         local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
@@ -196,9 +206,6 @@ require('nvim-lsp-installer').on_server_ready(function(server)
         buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
         buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
         buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-        buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-        buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-        buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
         buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
         buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
         buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
@@ -220,9 +227,41 @@ local has_words_before = function()
     return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
 
+------------------------------------------------------------------------------
+-- HEADER nvim-cmp
+------------------------------------------------------------------------------
 local cmp = require('cmp')
 local luasnip = require('luasnip')
-local lspkind = require('lspkind')
+
+vim.opt.completeopt = 'menu,menuone,noselect'
+
+local lsp_symbols = {
+    Text = "   (Text) ",
+    Method = "   (Method)",
+    Function = "   (Function)",
+    Constructor = "   (Constructor)",
+    Field = " ﴲ  (Field)",
+    Variable = "[] (Variable)",
+    Class = "   (Class)",
+    Interface = " ﰮ  (Interface)",
+    Module = "   (Module)",
+    Property = " 襁 (Property)",
+    Unit = "   (Unit)",
+    Value = "   (Value)",
+    Enum = " 練 (Enum)",
+    Keyword = "   (Keyword)",
+    Snippet = "   (Snippet)",
+    Color = "   (Color)",
+    File = "   (File)",
+    Reference = "   (Reference)",
+    Folder = "   (Folder)",
+    EnumMember = "   (EnumMember)",
+    Constant = " ﲀ  (Constant)",
+    Struct = " ﳤ  (Struct)",
+    Event = "   (Event)",
+    Operator = "   (Operator)",
+    TypeParameter = "   (TypeParameter)",
+}
 
 cmp.setup({
     snippet = {
@@ -231,7 +270,15 @@ cmp.setup({
         end,
     },
     formatting = {
-        format = lspkind.cmp_format({with_text = true, maxwidth = 50})
+        format = function(entry, item)
+            item.kind = lsp_symbols[item.kind]
+            item.menu = ({
+                buffer = "[Buffer]",
+                nvim_lsp = "[LSP]",
+                luasnip = "[Snippet]",
+            })[entry.source.name]
+            return item
+        end,
     },
     mapping = {
         ["<Tab>"] = cmp.mapping(function(fallback)
@@ -268,6 +315,14 @@ cmp.setup({
                 end
             end
         }),
+
+        ['<C-e>'] = cmp.mapping({
+            i = cmp.mapping.abort(),
+            c = cmp.mapping.close(),
+        }),
+
+        ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-f>'] = cmp.mapping.scroll_docs(4),
     },
     sources = cmp.config.sources({
         { name = 'nvim_lsp' },
@@ -279,3 +334,32 @@ cmp.setup({
 
 local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 cmp.event:on( 'confirm_done', cmp_autopairs.on_confirm_done({  map_char = { tex = '' } }))
+
+------------------------------------------------------------------------------
+-- HEADER toggleterm
+------------------------------------------------------------------------------
+require("toggleterm").setup({
+    size = 20,
+    open_mapping = [[<C-t>]],
+    hide_numbers = true,
+    shade_filetypes = {},
+    shade_terminals = true,
+    start_in_insert = true,
+    insert_mappings = true,
+    persist_size = true,
+    direction = 'float',
+    close_on_exit = true,
+    shell = o.shell,
+    float_opts = {
+        border = 'curved',
+        width = 180,
+        height = 90,
+        winblend = 3,
+        highlights = {
+            border = "Normal",
+            background = "Normal",
+        },
+    },
+})
+
+
