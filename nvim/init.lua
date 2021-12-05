@@ -1,39 +1,22 @@
 local install_path = vim.fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
 
-
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
     vim.fn.execute('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
 end
 
 require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
-
     use 'kyazdani42/nvim-web-devicons'
-    use {
-        'ellisonleao/gruvbox.nvim',
-        requires = 'rktjmp/lush.nvim',
-    }
-
     use 'nvim-treesitter/nvim-treesitter'
     use 'romgrk/barbar.nvim'
     use 'kyazdani42/nvim-tree.lua'
-
-    use 'cormacrelf/dark-notify'
     use 'lukas-reineke/indent-blankline.nvim'
     use 'nvim-lualine/lualine.nvim'
-
-    use {
-        'nvim-telescope/telescope.nvim',
-        requires = 'nvim-lua/plenary.nvim',
-    }
-
     use 'windwp/nvim-autopairs'
     use 'akinsho/toggleterm.nvim'
     use 'lervag/vimtex'
-
     use 'neovim/nvim-lspconfig'
     use 'williamboman/nvim-lsp-installer'
-
     use 'hrsh7th/cmp-nvim-lsp'
     use 'hrsh7th/cmp-buffer'
     use 'hrsh7th/cmp-path'
@@ -41,15 +24,35 @@ require('packer').startup(function(use)
     use 'hrsh7th/nvim-cmp'
     use 'L3MON4D3/LuaSnip'
     use 'arkav/lualine-lsp-progress'
+    use "ray-x/lsp_signature.nvim"
+    use "folke/which-key.nvim"
 
+    use {
+        'nvim-telescope/telescope.nvim',
+        requires = 'nvim-lua/plenary.nvim',
+    }
+
+    use {
+        'nvim-telescope/telescope-fzf-native.nvim',
+        run = 'make',
+    }
+
+    use {
+        'ellisonleao/gruvbox.nvim',
+        requires = 'rktjmp/lush.nvim',
+    }
 end)
 
+------------------------------------------------------------------------------
+-- HEADER defaults
+------------------------------------------------------------------------------
 local o = vim.o
 local cmd = vim.cmd
 
 o.mouse = 'a'
 
 o.termguicolors = true
+o.background = 'dark'
 vim.g.gruvbox_contrast_light = 'hard'
 vim.g.gruvbox_transparent_bg = 1
 cmd([[colorscheme gruvbox]])
@@ -65,8 +68,8 @@ o.shiftwidth = 4
 o.smartindent = true
 o.hidden = true
 
-o.colorcolumn = '80'
-o.textwidth = 80
+o.colorcolumn = '120'
+o.textwidth = 120
 o.wrap = false
 o.list = true
 o.linebreak = true
@@ -84,21 +87,89 @@ local key_map = vim.api.nvim_set_keymap
 vim.g.mapleader = " "
 key_map('n', '<leader>e', ':NvimTreeToggle<CR>', key_opts)
 key_map('n', '<leader>ff', ':Telescope<CR>', key_opts)
-key_map('n', '<leader>x', ':BufferClose<CR>', key_opts)
-key_map('n', '<leader>t', ':BufferNext<CR>', key_opts)
-key_map('n', '<leader>T', ':BufferPrevious<CR>', key_opts)
-key_map('n', '<leader>-<>', ':BufferMovePrevious<CR>', key_opts)
-key_map('n', '<leader>->>', ':BufferMoveNext<CR>', key_opts)
 key_map('n', '<leader>n', ':tabnew<CR>', key_opts)
 key_map('n', '<leader>s', ':w<CR>', key_opts)
 key_map('n', '<leader>fd', ':Telescope lsp_definitions<CR>', key_opts)
 key_map('n', '<leader>fr', ':Telescope lsp_references<CR>', key_opts)
 key_map('n', '<leader>fb', ':Telescope file_browser<CR>', key_opts)
 
+
+key_map('n', '<leader>x', ':BufferClose<CR>', key_opts)
+key_map('n', '<leader>t', ':BufferNext<CR>', key_opts)
+key_map('n', '<leader>T', ':BufferPrevious<CR>', key_opts)
+
+key_map('n', '<leader>b1', ':BufferGoto 1<CR>', key_opts)
+key_map('n', '<leader>b2', ':BufferGoto 2<CR>', key_opts)
+key_map('n', '<leader>b3', ':BufferGoto 3<CR>', key_opts)
+key_map('n', '<leader>b4', ':BufferGoto 4<CR>', key_opts)
+key_map('n', '<leader>b5', ':BufferGoto 5<CR>', key_opts)
+key_map('n', '<leader>b6', ':BufferGoto 6<CR>', key_opts)
+key_map('n', '<leader>b7', ':BufferGoto 7<CR>', key_opts)
+key_map('n', '<leader>b8', ':BufferGoto 8<CR>', key_opts)
+key_map('n', '<leader>b9', ':BufferGoto 9<CR>', key_opts)
+key_map('n', '<leader>b0', ':BufferLast<CR>', key_opts)
+
+key_map('n', '<leader>b<', ':BufferMovePrevious<CR>', key_opts)
+key_map('n', '<leader>b>', ':BufferMoveNext<CR>', key_opts)
+key_map('n', '<leader>bp', ':BufferPick<CR>', key_opts)
+key_map('n', '<leader>bb', ':BufferOrderByBufferNumber<CR>', key_opts)
+key_map('n', '<leader>bd', ':BufferOrderByDirectory<CR>', key_opts)
+key_map('n', '<leader>bl', ':BufferOrderByLanguage<CR>', key_opts)
+
 ------------------------------------------------------------------------------
--- HEADER dark-notify
+-- HEADER which-key
 ------------------------------------------------------------------------------
-require('dark_notify').run()
+o.timeoutlen = 500
+
+require("which-key").setup({
+    plugins = {
+        marks = true,
+        registers = true,
+        spelling = {
+            enabled = true,
+            suggestions = 20,
+        },
+    },
+    presets = {
+        operators = true,
+        motions = true,
+        text_objects = true,
+        windows = true,
+        nav = true,
+        z = true,
+        g = true,
+    },
+    icons = {
+        breadcrumb = "»",
+        separator = "➜",
+        group = "+",
+    },
+    popup_mappings = {
+        scroll_down = '<c-d>',
+        scroll_up = '<c-u>',
+    },
+    window = {
+        border = "none",
+        position = "bottom",
+        margin = { 1, 0, 1, 0 },
+        padding = { 2, 2, 2, 2 },
+        winblend = 0
+    },
+    layout = {
+        height = { min = 4, max = 25 },
+        width = { min = 20, max = 50 },
+        spacing = 3,
+        align = "left",
+    },
+    ignore_missing = false,
+    hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ "}, -- hide mapping boilerplate
+    show_help = true,
+    triggers = "auto",
+    triggers_blacklist = {
+        i = { "j", "k" },
+        v = { "j", "k" },
+    },
+})
 
 ------------------------------------------------------------------------------
 -- HEADER indent-blankline
@@ -157,7 +228,17 @@ require('telescope').setup({
             }
         }
     },
+    extensions = {
+        fzf = {
+            fuzzy = true,
+            override_generic_sorter = true,
+            override_file_sorter = true,
+            case_made = 'smart_case',
+        }
+    }
 })
+
+require('telescope').load_extension('fzf')
 
 ------------------------------------------------------------------------------
 -- HEADER treesitter
@@ -185,47 +266,31 @@ require('nvim-autopairs').setup({
 })
 
 ------------------------------------------------------------------------------
--- HEADER lsp-installer
+-- HEADER toggleterm
 ------------------------------------------------------------------------------
-require('nvim-lsp-installer').on_server_ready(function(server)
-    -- Use an on_attach function to only map the following keys
-    -- after the language server attaches to the current buffer
-    local on_attach = function(_, bufnr)
-        local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-        local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-
-        -- Enable completion triggered by <c-x><c-o>
-        buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-        -- Mappings.
-        local opts = { noremap=true, silent=true }
-
-        -- See `:help vim.lsp.*` for documentation on any of the below functions
-        buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-        buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-        buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-        buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-        buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-        buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-        buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-        buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-        buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-        buf_set_keymap('n', '<space>l', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
-        buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-        buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-        buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
-        buf_set_keymap('n', '<space>F', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-    end
-    opts = {
-        on_attach = on_attach,
-    }
-    server:setup(opts)
-end)
-
-local has_words_before = function()
-    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-end
+require("toggleterm").setup({
+    size = 20,
+    open_mapping = [[<C-t>]],
+    hide_numbers = true,
+    shade_filetypes = {},
+    shade_terminals = true,
+    start_in_insert = true,
+    insert_mappings = true,
+    persist_size = true,
+    direction = 'float',
+    close_on_exit = true,
+    shell = o.shell,
+    float_opts = {
+        border = 'curved',
+        width = 180,
+        height = 90,
+        winblend = 3,
+        highlights = {
+            border = "Normal",
+            background = "Normal",
+        },
+    },
+})
 
 ------------------------------------------------------------------------------
 -- HEADER nvim-cmp
@@ -234,6 +299,11 @@ local cmp = require('cmp')
 local luasnip = require('luasnip')
 
 vim.opt.completeopt = 'menu,menuone,noselect'
+
+local has_words_before = function()
+    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+end
 
 local lsp_symbols = {
     Text = "   (Text) ",
@@ -336,30 +406,40 @@ local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 cmp.event:on( 'confirm_done', cmp_autopairs.on_confirm_done({  map_char = { tex = '' } }))
 
 ------------------------------------------------------------------------------
--- HEADER toggleterm
+-- HEADER lsp-installer
 ------------------------------------------------------------------------------
-require("toggleterm").setup({
-    size = 20,
-    open_mapping = [[<C-t>]],
-    hide_numbers = true,
-    shade_filetypes = {},
-    shade_terminals = true,
-    start_in_insert = true,
-    insert_mappings = true,
-    persist_size = true,
-    direction = 'float',
-    close_on_exit = true,
-    shell = o.shell,
-    float_opts = {
-        border = 'curved',
-        width = 180,
-        height = 90,
-        winblend = 3,
-        highlights = {
-            border = "Normal",
-            background = "Normal",
-        },
-    },
-})
+require('nvim-lsp-installer').on_server_ready(function(server)
+    -- Use an on_attach function to only map the following keys
+    -- after the language server attaches to the current buffer
+    local on_attach = function(client, bufnr)
+        local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+        local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
+        require('lsp_signature').on_attach()
+        -- Enable completion triggered by <c-x><c-o>
+        buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
+        -- Mappings.
+        local opts = { noremap=true, silent=true }
+
+        -- See `:help vim.lsp.*` for documentation on any of the below functions
+        buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+        buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+        buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+        buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+        buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+        buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+        buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+        buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+        buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+        buf_set_keymap('n', '<space>l', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+        buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+        buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+        buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+        buf_set_keymap('n', '<space>F', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+    end
+    opts = {
+        on_attach = on_attach,
+    }
+    server:setup(opts)
+end)
