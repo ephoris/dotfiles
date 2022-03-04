@@ -4,6 +4,10 @@ if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
     vim.fn.execute('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
 end
 
+local has = vim.fn.has
+vim.g.is_mac = (has("mac") or has("macunix") or has("gui_macvim") or vim.fn.system("uname"):find("^darwin") ~= nil)
+
+
 require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
     use 'kyazdani42/nvim-web-devicons'
@@ -30,9 +34,15 @@ require('packer').startup(function(use)
     use 'machakann/vim-sandwich'
     use 'folke/zen-mode.nvim'
     use 'folke/twilight.nvim'
+    use 'cormacrelf/dark-notify'
+    use 'f-person/auto-dark-mode.nvim'
+
+    -- Unable to decide a colorscheme
     use 'folke/tokyonight.nvim'
-    use 'luisiacc/gruvbox-baby'
     use 'sainnhe/gruvbox-material'
+    use 'sainnhe/edge'
+    use 'sainnhe/everforest'
+    use 'savq/melange'
 
     use {
         'nvim-telescope/telescope.nvim',
@@ -42,11 +52,6 @@ require('packer').startup(function(use)
     use {
         'nvim-telescope/telescope-fzf-native.nvim',
         run = 'make',
-    }
-
-    use {
-        'ellisonleao/gruvbox.nvim',
-        requires = 'rktjmp/lush.nvim',
     }
 end)
 
@@ -58,18 +63,34 @@ local cmd = vim.cmd
 
 o.mouse = 'a'
 
+-- color scheme stuff
 o.termguicolors = true
-o.background = 'dark'
-vim.g.gruvbox_contrast_dark = 'medium'
--- cmd([[colorscheme gruvbox]])
-vim.g.gruvbox_baby_comment_style = "NONE"
-vim.g.gruvbox_baby_keyword_style = "NONE"
+vim.g.gruvbox_material_background = 'medium'
 vim.g.gruvbox_material_palette = 'original'
 vim.g.gruvbox_material_statusline_style = 'original'
 cmd([[colorscheme gruvbox-material]])
+local auto_dark_mode = require('auto-dark-mode')
+auto_dark_mode.setup({
+    set_dark_mode = function()
+        vim.api.nvim_set_option('background', 'dark')
+        vim.g.gruvbox_material_background = 'medium'
+        vim.g.gruvbox_material_palette = 'original'
+        vim.g.gruvbox_material_statusline_style = 'original'
+        cmd([[colorscheme gruvbox-material]])
+    end,
+    set_light_mode = function()
+        vim.api.nvim_set_option('background', 'light')
+        vim.g.gruvbox_material_background = 'hard'
+        vim.g.gruvbox_material_palette = 'original'
+        vim.g.gruvbox_material_statusline_style = 'original'
+        vim.g.everforest_background = 'hard'
+        cmd([[colorscheme everforest]])
+    end
+})
+auto_dark_mode.init()
+
 
 o.number = true
--- cmd([[autocmd ColorScheme * highlight CursorLine gui=NONE cterm=NONE ctermbg=NONE ctermfg=NONE guibg=NONE guifg=NONE]])
 o.cursorline = true
 o.cursorlineopt = 'number'
 
@@ -90,6 +111,11 @@ o.hlsearch = true
 o.ignorecase = true
 o.smartcase = true
 
+vim.g.tex_flavor = 'latex'
+vim.g.vimtex_view_method = 'skim'
+vim.g.vimtex_view_skim_sync = 1
+vim.g.vimtex_view_skim_activate = 1
+
 ------------------------------------------------------------------------------
 -- HEADER shortcuts
 ------------------------------------------------------------------------------
@@ -99,12 +125,13 @@ local key_map = vim.api.nvim_set_keymap
 vim.g.mapleader = " "
 key_map('n', '<leader>e', ':NvimTreeToggle<CR>', key_opts)
 key_map('n', '<leader>ff', ':Telescope<CR>', key_opts)
-key_map('n', '<leader>n', ':tabnew<CR>', key_opts)
+key_map('n', '<leader>\\', ':tabnew<CR>', key_opts)
 key_map('n', '<leader>s', ':w<CR>', key_opts)
 key_map('n', '<leader>fd', ':Telescope lsp_definitions<CR>', key_opts)
 key_map('n', '<leader>fr', ':Telescope lsp_references<CR>', key_opts)
 key_map('n', '<leader>fb', ':Telescope file_browser<CR>', key_opts)
 key_map('n', '<leader>h', ':nohl<CR>', key_opts)
+key_map('n', '<leader>rr', ':e<CR>', key_opts) -- Essentially a refresh
 
 key_map('n', '<leader>x', ':BufferClose<CR>', key_opts)
 key_map('n', '<leader>t', ':BufferNext<CR>', key_opts)
@@ -129,7 +156,6 @@ key_map('n', '<leader>bd', ':BufferOrderByDirectory<CR>', key_opts)
 key_map('n', '<leader>bl', ':BufferOrderByLanguage<CR>', key_opts)
 
 key_map('n', '<leader>z', ':ZenMode<CR>', key_opts)
-
 
 ------------------------------------------------------------------------------
 -- HEADER zen-mode
@@ -324,7 +350,7 @@ require("toggleterm").setup({
 })
 
 ------------------------------------------------------------------------------
--- HEADER lsp-installer
+-- HEADER lsp-installer nvim-lspconfig
 ------------------------------------------------------------------------------
 local on_attach = function(client, bufnr)
     local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
@@ -347,7 +373,7 @@ local on_attach = function(client, bufnr)
     buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
     buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
     buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-    buf_set_keymap('n', '<space>l', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+    buf_set_keymap('n', '<space>l', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
     buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
     buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
     buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
