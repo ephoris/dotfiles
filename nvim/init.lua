@@ -36,6 +36,7 @@ require('packer').startup(function(use)
     use 'folke/twilight.nvim'
     use 'cormacrelf/dark-notify'
     use 'f-person/auto-dark-mode.nvim'
+    use 'brymer-meneses/grammar-guard.nvim'
 
     -- Unable to decide a colorscheme
     use 'folke/tokyonight.nvim'
@@ -80,9 +81,6 @@ auto_dark_mode.setup({
     end,
     set_light_mode = function()
         vim.api.nvim_set_option('background', 'light')
-        vim.g.gruvbox_material_background = 'hard'
-        vim.g.gruvbox_material_palette = 'original'
-        vim.g.gruvbox_material_statusline_style = 'original'
         vim.g.everforest_background = 'hard'
         cmd([[colorscheme everforest]])
     end
@@ -110,6 +108,11 @@ o.linebreak = true
 o.hlsearch = true
 o.ignorecase = true
 o.smartcase = true
+o.signcolumn = "number"
+
+o.foldmethod = "expr"
+o.foldexpr = "nvim_treesitter#foldexpr()"
+o.foldlevel = 20
 
 vim.g.tex_flavor = 'latex'
 vim.g.vimtex_view_method = 'skim'
@@ -328,20 +331,14 @@ require('nvim-autopairs').setup({
 ------------------------------------------------------------------------------
 require("toggleterm").setup({
     open_mapping = [[<C-t>]],
-    hide_numbers = true,
-    shade_filetypes = {},
-    shade_terminals = true,
-    start_in_insert = true,
-    insert_mappings = true,
-    persist_size = true,
-    direction = 'float',
-    close_on_exit = true,
-    shell = o.shell,
+    direction = 'horizontal',
+    shade_terminals = false,
+    size = 30,
     float_opts = {
         border = 'curved',
         width = 160,
         height = 80,
-        winblend = 3,
+        winblend = 0,
         highlights = {
             border = "Normal",
             background = "Normal",
