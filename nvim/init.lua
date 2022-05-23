@@ -4,9 +4,6 @@ if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
     vim.fn.execute('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
 end
 
-local has = vim.fn.has
-vim.g.is_mac = (has("mac") or has("macunix") or has("gui_macvim") or vim.fn.system("uname"):find("^darwin") ~= nil)
-
 
 require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
@@ -19,6 +16,9 @@ require('packer').startup(function(use)
     use 'windwp/nvim-autopairs'
     use 'akinsho/toggleterm.nvim'
     use 'lervag/vimtex'
+
+    -- LSP Items
+    use 'simrat39/rust-tools.nvim'
     use 'neovim/nvim-lspconfig'
     use 'williamboman/nvim-lsp-installer'
     use 'hrsh7th/cmp-nvim-lsp'
@@ -27,9 +27,12 @@ require('packer').startup(function(use)
     use 'hrsh7th/cmp-cmdline'
     use 'hrsh7th/nvim-cmp'
     use 'L3MON4D3/LuaSnip'
+	use 'rafamadriz/friendly-snippets'
+	use 'saadparwaiz1/cmp_luasnip'
     use 'arkav/lualine-lsp-progress'
-    use "ray-x/lsp_signature.nvim"
-    use "folke/which-key.nvim"
+    use 'ray-x/lsp_signature.nvim'
+
+    use 'folke/which-key.nvim'
     use 'kkoomen/vim-doge'
     use 'machakann/vim-sandwich'
     use 'folke/zen-mode.nvim'
@@ -67,16 +70,12 @@ o.mouse = 'a'
 -- color scheme stuff
 o.termguicolors = true
 vim.g.gruvbox_material_background = 'medium'
-vim.g.gruvbox_material_palette = 'original'
-vim.g.gruvbox_material_statusline_style = 'original'
 cmd([[colorscheme gruvbox-material]])
 local auto_dark_mode = require('auto-dark-mode')
 auto_dark_mode.setup({
     set_dark_mode = function()
         vim.api.nvim_set_option('background', 'dark')
         vim.g.gruvbox_material_background = 'medium'
-        vim.g.gruvbox_material_palette = 'original'
-        vim.g.gruvbox_material_statusline_style = 'original'
         cmd([[colorscheme gruvbox-material]])
     end,
     set_light_mode = function()
@@ -99,8 +98,8 @@ o.shiftwidth = 4
 o.smartindent = true
 o.hidden = true
 
-o.colorcolumn = '120'
-o.textwidth = 120
+o.colorcolumn = '80'
+o.textwidth = 80
 o.wrap = false
 o.list = true
 o.linebreak = true
@@ -184,51 +183,10 @@ o.timeoutlen = 500
 
 require("which-key").setup({
     plugins = {
-        marks = true,
-        registers = true,
         spelling = {
             enabled = true,
             suggestions = 20,
         },
-    },
-    presets = {
-        operators = true,
-        motions = true,
-        text_objects = true,
-        windows = true,
-        nav = true,
-        z = true,
-        g = true,
-    },
-    icons = {
-        breadcrumb = "»",
-        separator = "➜",
-        group = "+",
-    },
-    popup_mappings = {
-        scroll_down = '<c-d>',
-        scroll_up = '<c-u>',
-    },
-    window = {
-        border = "none",
-        position = "bottom",
-        margin = { 1, 0, 1, 0 },
-        padding = { 2, 2, 2, 2 },
-        winblend = 0
-    },
-    layout = {
-        height = { min = 4, max = 25 },
-        width = { min = 20, max = 50 },
-        spacing = 3,
-        align = "left",
-    },
-    ignore_missing = false,
-    hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ "}, -- hide mapping boilerplate
-    show_help = true,
-    triggers = "auto",
-    triggers_blacklist = {
-        i = { "j", "k" },
-        v = { "j", "k" },
     },
 })
 
@@ -247,7 +205,6 @@ require("indent_blankline").setup({
 ------------------------------------------------------------------------------
 -- HEADER lualine
 ------------------------------------------------------------------------------
-
 require('lualine').setup({
     options = {
         icons_enabled = true,
@@ -303,7 +260,7 @@ require('telescope').load_extension('fzf')
 
 ------------------------------------------------------------------------------
 -- HEADER treesitter
-------------------------------------------------------------------------------
+-----------------------------------------------------------------------------
 require('nvim-treesitter.configs').setup({
     highlight = {
         enable = true,
@@ -315,7 +272,7 @@ require('nvim-treesitter.configs').setup({
 ------------------------------------------------------------------------------
 require('nvim-tree').setup({
     view = {
-        side = 'right',
+        side = 'left',
     },
 })
 
@@ -333,7 +290,7 @@ require("toggleterm").setup({
     open_mapping = [[<C-t>]],
     direction = 'horizontal',
     shade_terminals = false,
-    size = 30,
+    size = 25,
     float_opts = {
         border = 'curved',
         width = 160,
@@ -349,45 +306,75 @@ require("toggleterm").setup({
 ------------------------------------------------------------------------------
 -- HEADER lsp-installer nvim-lspconfig
 ------------------------------------------------------------------------------
+require('nvim-lsp-installer').setup({})
+
+---@diagnostic disable-next-line: unused-local
 local on_attach = function(client, bufnr)
     local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
     local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-
-    require('lsp_signature').on_attach()
-    -- Enable completion triggered by <c-x><c-o>
-    buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-    -- Mappings.
     local opts = { noremap=true, silent=true }
 
-    -- See `:help vim.lsp.*` for documentation on any of the below functions
+    require('lsp_signature').on_attach()
+    buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+
     buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
     buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-    buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+    buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
     buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
     buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
     buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
     buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
     buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-    buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
     buf_set_keymap('n', '<space>l', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
+    buf_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
+    buf_set_keymap('n', '<space>F', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+    buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
     buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
     buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-    buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
-    buf_set_keymap('n', '<space>F', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 end
 
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = require('cmp_nvim_lsp').update_capabilities(
+	vim.lsp.protocol.make_client_capabilities())
 
-require('nvim-lsp-installer').on_server_ready(function(server)
-    -- Use an on_attach function to only map the following keys
-    -- after the language server attaches to the current buffer
-    opts = {
-        on_attach = on_attach,
-        capabilities = capabilities,
+local default_opts = {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    settings = {
+        ["rust-analyzer"] = {
+            checkOnSave = {
+                command = "clippy",
+                allFeatures = true,
+            },
+        }
     }
-    server:setup(opts)
-end)
+}
+
+local rust_opts = {
+    tools = {
+        autoSetHints = true,
+        hover_with_actions = true,
+        inlay_hints = {
+            only_current_line = false,
+            show_parameter_hints = true,
+            show_variable_name = true,
+        }
+    },
+    server = default_opts
+}
+
+for _, server in ipairs(require('nvim-lsp-installer').get_installed_servers())
+do
+    -- if server == 'rust_analyzer' then
+    --     -- Never configure with lspconfig
+    -- else
+    --     require('lspconfig')[server.name].setup(default_opts)
+    -- end
+    require('lspconfig')[server.name].setup(default_opts)
+end
+-- TODO: Figure out how to combine
+-- Rust tools and nvim-lsp-installer somehow do not play nicely together
+-- especially for features like inlay hints
+require('rust-tools').setup(rust_opts)
 
 
 ------------------------------------------------------------------------------
@@ -395,12 +382,15 @@ end)
 ------------------------------------------------------------------------------
 local cmp = require('cmp')
 local luasnip = require('luasnip')
+require("luasnip.loaders.from_vscode").lazy_load()
 
 vim.opt.completeopt = 'menu,menuone,noselect'
 
 local has_words_before = function()
     local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+	return col ~= 0
+		and vim.api.nvim_buf_get_lines(
+			0, line - 1, line, true)[1]:sub( col, col):match("%s") == nil
 end
 
 local lsp_symbols = {
@@ -471,8 +461,6 @@ cmp.setup({
             end
         end, { "i", "s" }),
 
-        ['<C-space>'] = cmp.mapping(cmp.mapping.complete(), {'i', 'c'}),
-
         ['<CR>'] = cmp.mapping({
             i = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false }),
             c = function(fallback)
@@ -483,12 +471,11 @@ cmp.setup({
                 end
             end
         }),
-
         ['<C-e>'] = cmp.mapping({
             i = cmp.mapping.abort(),
             c = cmp.mapping.close(),
         }),
-
+        ['<C-space>'] = cmp.mapping(cmp.mapping.complete(), {'i', 'c'}),
         ['<C-b>'] = cmp.mapping.scroll_docs(-4),
         ['<C-f>'] = cmp.mapping.scroll_docs(4),
     },
@@ -502,5 +489,4 @@ cmp.setup({
 })
 
 local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-cmp.event:on( 'confirm_done', cmp_autopairs.on_confirm_done({  map_char = { tex = '' } }))
-
+cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({  map_char = { tex = '' } }))
