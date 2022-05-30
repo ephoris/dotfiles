@@ -4,20 +4,28 @@ if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
     vim.fn.execute('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
 end
 
-
 require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
-    use 'kyazdani42/nvim-web-devicons'
-    use 'nvim-treesitter/nvim-treesitter'
-    use 'romgrk/barbar.nvim'
-    use 'kyazdani42/nvim-tree.lua'
-    use 'lukas-reineke/indent-blankline.nvim'
-    use 'nvim-lualine/lualine.nvim'
-    use 'windwp/nvim-autopairs'
-    use 'akinsho/toggleterm.nvim'
-    use 'lervag/vimtex'
 
-    -- LSP Items
+    -- Display
+    use 'f-person/auto-dark-mode.nvim'
+    use 'sainnhe/gruvbox-material'
+    use 'sainnhe/everforest'
+    use 'kyazdani42/nvim-web-devicons'
+    use 'kyazdani42/nvim-tree.lua'
+    use 'romgrk/barbar.nvim'
+    use 'nvim-lualine/lualine.nvim'
+    use 'nvim-treesitter/nvim-treesitter'
+    use {
+        'nvim-telescope/telescope.nvim',
+        requires = 'nvim-lua/plenary.nvim',
+    }
+    use {
+        'nvim-telescope/telescope-fzf-native.nvim',
+        run = 'make',
+    }
+
+    -- LSP
     use 'simrat39/rust-tools.nvim'
     use 'neovim/nvim-lspconfig'
     use 'williamboman/nvim-lsp-installer'
@@ -31,32 +39,20 @@ require('packer').startup(function(use)
 	use 'saadparwaiz1/cmp_luasnip'
     use 'arkav/lualine-lsp-progress'
     use 'ray-x/lsp_signature.nvim'
-
-    use 'folke/which-key.nvim'
     use 'kkoomen/vim-doge'
+
+    -- Editing
+    use 'akinsho/toggleterm.nvim'
+    use 'windwp/nvim-autopairs'
     use 'machakann/vim-sandwich'
+    use 'lukas-reineke/indent-blankline.nvim'
+    use 'folke/which-key.nvim'
     use 'folke/zen-mode.nvim'
     use 'folke/twilight.nvim'
-    use 'cormacrelf/dark-notify'
-    use 'f-person/auto-dark-mode.nvim'
+
+    -- LaTeX
+    use 'lervag/vimtex'
     use 'brymer-meneses/grammar-guard.nvim'
-
-    -- Unable to decide a colorscheme
-    use 'folke/tokyonight.nvim'
-    use 'sainnhe/gruvbox-material'
-    use 'sainnhe/edge'
-    use 'sainnhe/everforest'
-    use 'savq/melange'
-
-    use {
-        'nvim-telescope/telescope.nvim',
-        requires = 'nvim-lua/plenary.nvim',
-    }
-
-    use {
-        'nvim-telescope/telescope-fzf-native.nvim',
-        run = 'make',
-    }
 end)
 
 ------------------------------------------------------------------------------
@@ -125,14 +121,9 @@ local key_opts = {noremap = true, silent = true}
 local key_map = vim.api.nvim_set_keymap
 
 vim.g.mapleader = " "
-key_map('n', '<leader>e', ':NvimTreeToggle<CR>', key_opts)
-key_map('n', '<leader>ff', ':Telescope<CR>', key_opts)
-key_map('n', '<leader>\\', ':tabnew<CR>', key_opts)
-key_map('n', '<leader>s', ':w<CR>', key_opts)
-key_map('n', '<leader>fd', ':Telescope lsp_definitions<CR>', key_opts)
-key_map('n', '<leader>fr', ':Telescope lsp_references<CR>', key_opts)
-key_map('n', '<leader>fb', ':Telescope file_browser<CR>', key_opts)
-key_map('n', '<leader>h', ':nohl<CR>', key_opts)
+key_map('n', '<leader>e',  ':NvimTreeToggle<CR>', key_opts)
+key_map('n', '<leader>s',  ':w<CR>', key_opts)
+key_map('n', '<leader>h',  ':nohl<CR>', key_opts)
 key_map('n', '<leader>rr', ':e<CR>', key_opts) -- Essentially a refresh
 
 key_map('n', '<leader>x', ':BufferClose<CR>', key_opts)
@@ -159,6 +150,15 @@ key_map('n', '<leader>bl', ':BufferOrderByLanguage<CR>', key_opts)
 
 key_map('n', '<leader>z', ':ZenMode<CR>', key_opts)
 
+-- Telescope shortcuts
+key_map('n', '<leader>ft', ':Telescope<CR>', key_opts)
+key_map('n', '<leader>ff', ':Telescope find_files<CR>', key_opts)
+key_map('n', '<leader>fr', ':Telescope lsp_references<CR>', key_opts)
+key_map('n', '<leader>fd', ':Telescope diagnostics<CR>', key_opts)
+key_map('n', '<leader>fb', ':Telescope buffers<CR>', key_opts)
+key_map('n', '<leader>fg', ':Telescope live_grep<CR>', key_opts)
+key_map('n', '<leader>fz', ':Telescope grep_string<CR>', key_opts)
+
 ------------------------------------------------------------------------------
 -- HEADER zen-mode
 ------------------------------------------------------------------------------
@@ -181,7 +181,19 @@ require('zen-mode').setup{
 ------------------------------------------------------------------------------
 o.timeoutlen = 500
 
-require("which-key").setup({
+
+local wk = require("which-key")
+local show = wk.show
+wk.show = function(keys, opts)
+    if vim.bo.filetype == "TelescopePrompt" then
+        local map = "<c-r>"
+        local key = vim.api.nvim_replace_termcodes(map, true, false, true)
+        vim.api.nvim_feedkeys(key, "i", true)
+    end
+    show(keys, opts)
+end
+
+wk.setup({
     plugins = {
         spelling = {
             enabled = true,
@@ -361,6 +373,8 @@ local rust_opts = {
     },
     server = default_opts
 }
+
+require("grammar-guard").init() -- latex server
 
 for _, server in ipairs(require('nvim-lsp-installer').get_installed_servers())
 do
