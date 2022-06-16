@@ -1,0 +1,117 @@
+{
+    "C_Cpp.enhancedColorization": "Enabled",
+    "C_Cpp.loggingLevel": "Debug",
+    "cmake.configureOnOpen": true,
+
+    "workbench.statusBar.visible": true,
+    "workbench.sideBar.location": "left",
+    "workbench.iconTheme": "material-icon-theme",
+    "zenMode.hideTabs": false,
+
+    "editor.insertSpaces": true,
+    "editor.cursorStyle": "line",
+    "editor.lineNumbers": "on",
+    "editor.wordSeparators": "/\\()\"':,.;<>~!@#$%^&*|+=[]{}`?-",
+    "editor.tabSize": 4,
+    "editor.tabCompletion": "on",
+    "editor.renderWhitespace" :"boundary",
+    "editor.wordWrap" : "off",
+    "editor.fontSize": 14,
+    "editor.fontFamily": "MesloLGS NF",
+    "editor.rulers": [120],
+    "editor.minimap.maxColumn": 120,
+    "editor.minimap.scale": 1,
+    "editor.semanticHighlighting.enabled": true,
+    "terminal.integrated.fontFamily": "MesloLGS NF",
+    "terminal.integrated.fontSize": 14,
+    "terminal.integrated.inheritEnv": false,
+
+    "[markdown]":{
+        "editor.wordWrap": "off",
+        "editor.quickSuggestions": {
+            "comments": "off",
+            "strings": "off",
+            "other": "off"
+        }
+    },
+
+    "vim.foldfix": true,
+    "vim.ignorecase": true,
+    "vim.hlsearch": true,
+    "vim.incsearch": true,
+    "vim.useCtrlKeys": true,
+    "vim.textwidth": 120,
+    "vim.surround": true,
+    "vim.autoindent": true,
+    "vim.leader": "<space>",
+    "vim.handleKeys": {
+        "<C-k>": false,
+        "<C-o>": false,
+    },
+    "vim.normalModeKeyBindings": [
+        {"before": ["<leader>", "e"],
+         "commands": ["workbench.view.explorer"]},
+        {"before": ["<leader>", "s"],
+         "commands": ["workbench.action.files.save"]},
+        {"before": ["<leader>", "h"],
+         "commands": [":nohl"]},
+        {"before": ["<leader>", "x"],
+         "commands": ["workbench.action.closeActiveEditor"]},
+        {"before": ["<leader>", "t"],
+         "commands": ["workbench.action.nextEditor"]},
+        {"before": ["<leader>", "T"],
+         "commands": ["workbench.action.previousEditor"]},
+        {"before": ["<leader>", "r", "n"],
+         "commands": ["editor.action.rename"]},
+        {"before": ["K"],
+         "commands": ["editor.action.showHover"]},
+    ],
+
+    "python.languageServer": "Pylance",
+    "workbench.editorAssociations": {
+        "*.ipynb": "jupyter-notebook"
+    },
+
+    "latex-workshop.view.pdf.viewer": "tab",
+    "latex-workshop.bibtex-format.tab": "4 spaces",
+
+    "git.ignoreLegacyWarning": true,
+
+    "remote.SSH.remoteServerListenOnSocket": true,
+    "remote.SSH.showLoginTerminal": true,
+    "remote.SSH.remotePlatform": {
+        "pilaros": "linux",
+        "csa2": "linux",
+        "pilaros-proxy": "linux"
+    },
+
+    "[json]": {
+        "editor.quickSuggestions": {
+            "strings": true
+        },
+        "editor.suggest.insertMode": "replace"
+    },
+    "[yaml]": {
+        "editor.insertSpaces": false,
+        "editor.tabSize": 4,
+        "editor.autoIndent": "advanced"
+    },
+
+    "notebook.cellToolbarLocation": {
+        "default": "right",
+        "jupyter-notebook": "left"
+    },
+
+    "vscode-pets.petSize": "large",
+    "everforest.lightContrast": "hard",
+    "gruvboxMaterial.darkWorkbench": "flat",
+    "gruvboxMaterial.darkSelection": "purple",
+
+    "security.workspace.trust.emptyWindow": true,
+    "security.workspace.trust.enabled": false,
+
+    "window.autoDetectColorScheme": true,
+    "workbench.preferredLightColorTheme": "Everforest Light",
+    "workbench.preferredDarkColorTheme": "Gruvbox Material Dark",
+    "workbench.colorTheme": "Gruvbox Material Dark",
+}
