@@ -52,6 +52,7 @@ require('packer').startup(function(use)
     use 'folke/which-key.nvim'
     use 'folke/zen-mode.nvim'
     use 'folke/twilight.nvim'
+    use 'petertriho/nvim-scrollbar'
 
     -- LaTeX
     use 'lervag/vimtex'
