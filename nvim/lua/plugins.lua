@@ -23,6 +23,7 @@ require('packer').startup(function(use)
         'nvim-telescope/telescope.nvim',
         requires = 'nvim-lua/plenary.nvim',
     }
+    use 'nvim-telescope/telescope-file-browser.nvim'
     use {
         'nvim-telescope/telescope-fzf-native.nvim',
         run = 'make',
@@ -53,6 +54,12 @@ require('packer').startup(function(use)
     use 'folke/zen-mode.nvim'
     use 'folke/twilight.nvim'
     use 'petertriho/nvim-scrollbar'
+    use {
+        'numToStr/Comment.nvim',
+        config = function()
+            require('Comment').setup()
+        end
+    }
 
     -- LaTeX
     use 'lervag/vimtex'
