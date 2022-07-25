@@ -7,7 +7,8 @@ require('telescope').setup({
             i = {
                 ['<C-h>'] = 'which_key'
             }
-        }
+        },
+        layout_strategy = 'vertical'
     }
 })
 

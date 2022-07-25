@@ -1,7 +1,8 @@
 ------------------------------------------------------------------------------
 -- HEADER lsp-installer nvim-lspconfig
 ------------------------------------------------------------------------------
-require('nvim-lsp-installer').setup({})
+require("mason").setup {}
+require("mason-lspconfig").setup {}
 
 local on_attach = function(client, bufnr)
     local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
@@ -56,9 +57,9 @@ local rust_opts = {
     server = default_opts
 }
 
-for _, server in ipairs(require('nvim-lsp-installer').get_installed_servers())
+for _, server_name in ipairs(require('mason-lspconfig').get_installed_servers())
 do
-    require('lspconfig')[server.name].setup(default_opts)
+    print(require('lspconfig')[server_name].setup(default_opts))
 end
 -- TODO: Figure out how to combine
 -- Rust tools and nvim-lsp-installer somehow do not play nicely together
