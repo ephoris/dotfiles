@@ -4,7 +4,7 @@
 require("mason").setup {}
 require("mason-lspconfig").setup {}
 
-local on_attach = function(client, bufnr)
+local on_attach = function(_, bufnr)
     local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
     local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
     local opts = { noremap=true, silent=true }
@@ -47,7 +47,6 @@ local default_opts = {
 local rust_opts = {
     tools = {
         autoSetHints = true,
-        hover_with_actions = true,
         inlay_hints = {
             only_current_line = false,
             show_parameter_hints = true,
@@ -59,10 +58,18 @@ local rust_opts = {
 
 for _, server_name in ipairs(require('mason-lspconfig').get_installed_servers())
 do
-    print(require('lspconfig')[server_name].setup(default_opts))
+    if server_name == "rust-analyzer" then
+        require('rust-tools').setup(rust_opts)
+    else
+        print(require('lspconfig')[server_name].setup(default_opts))
+    end
 end
--- TODO: Figure out how to combine
--- Rust tools and nvim-lsp-installer somehow do not play nicely together
--- especially for features like inlay hints
-require('rust-tools').setup(rust_opts)
 
+require("null-ls").setup({
+    sources = {
+        require("null-ls").builtins.formatting.stylua,
+        require("null-ls").builtins.formatting.black,
+        require("null-ls").builtins.diagnostics.eslint,
+        require("null-ls").builtins.completion.spell,
+    },
+})
