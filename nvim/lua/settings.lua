@@ -10,7 +10,7 @@ o.mouse = 'a'
 
 -- color scheme stuff
 o.termguicolors = true
-g.gruvbox_material_background = 'medium'
+g.gruvbox_material_background = "hard"
 cmd([[colorscheme gruvbox-material]])
 api.nvim_set_option('background', 'dark')
 

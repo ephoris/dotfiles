@@ -65,7 +65,6 @@ require('packer').startup(function(use)
 
     -- LaTeX
     use 'lervag/vimtex'
-    use 'brymer-meneses/grammar-guard.nvim'
 end)
 
 require('config')

@@ -6,8 +6,10 @@ require("mason-lspconfig").setup {}
 
 local on_attach = function(_, bufnr)
     local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+
     local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-    local opts = { noremap=true, silent=true }
+
+    local opts = { noremap = true, silent = true }
 
     require('lsp_signature').on_attach()
     buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
@@ -29,7 +31,7 @@ local on_attach = function(_, bufnr)
 end
 
 local capabilities = require('cmp_nvim_lsp').update_capabilities(
-	vim.lsp.protocol.make_client_capabilities())
+    vim.lsp.protocol.make_client_capabilities())
 
 local default_opts = {
     on_attach = on_attach,
@@ -56,20 +58,17 @@ local rust_opts = {
     server = default_opts
 }
 
-for _, server_name in ipairs(require('mason-lspconfig').get_installed_servers())
-do
+for _, server_name in ipairs(require('mason-lspconfig').get_installed_servers()) do
     if server_name == "rust-analyzer" then
         require('rust-tools').setup(rust_opts)
     else
-        print(require('lspconfig')[server_name].setup(default_opts))
+        require('lspconfig')[server_name].setup(default_opts)
     end
 end
 
 require("null-ls").setup({
     sources = {
-        require("null-ls").builtins.formatting.stylua,
         require("null-ls").builtins.formatting.black,
-        require("null-ls").builtins.diagnostics.eslint,
         require("null-ls").builtins.completion.spell,
     },
 })
