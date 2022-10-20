@@ -24,15 +24,13 @@ local on_attach = function(_, bufnr)
     buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
     buf_set_keymap('n', '<space>l', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
     buf_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
-    buf_set_keymap('n', '<space>F', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+    buf_set_keymap('n', '<space>F', '<cmd>lua vim.lsp.buf.format({async=True})<CR>', opts)
     buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
     buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
     buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
 end
 
-local capabilities = require('cmp_nvim_lsp').update_capabilities(
-    vim.lsp.protocol.make_client_capabilities())
-
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
 local default_opts = {
     on_attach = on_attach,
     capabilities = capabilities,
@@ -68,7 +66,6 @@ end
 
 require("null-ls").setup({
     sources = {
-        require("null-ls").builtins.formatting.black,
         require("null-ls").builtins.completion.spell,
     },
 })
