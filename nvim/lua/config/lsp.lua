@@ -64,8 +64,8 @@ for _, server_name in ipairs(require('mason-lspconfig').get_installed_servers())
     end
 end
 
-require("null-ls").setup({
-    sources = {
-        require("null-ls").builtins.completion.spell,
-    },
-})
+-- require("null-ls").setup({
+--     sources = {
+--         require("null-ls").builtins.completion.spell,
+--     },
+-- })
