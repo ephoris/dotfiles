@@ -1,13 +1,26 @@
 ------------------------------------------------------------------------------
 -- HEADER plugins
 ------------------------------------------------------------------------------
-local install_path = vim.fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
+local packer_bootstrap = false
+local packer_install_path = vim.fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
 
-if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-    vim.fn.execute('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
+if vim.fn.empty(vim.fn.glob(packer_install_path)) > 0 then
+	packer_bootstrap = true
+	vim.fn.system {
+		"git",
+		"clone",
+		"--depth",
+		"1",
+		"https://github.com/wbthomason/packer.nvim",
+		packer_install_path,
+	}
+	vim.o.runtimepath = vim.fn.stdpath "data" .. "/site/pack/*/start/*," .. vim.o.runtimepath
 end
 
 require('packer').startup(function(use)
+    if packer_bootstrap then
+		require('packer').sync()
+	end
     use 'wbthomason/packer.nvim'
 
     -- Display
