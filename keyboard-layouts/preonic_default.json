@@ -30,7 +30,7 @@
       "KC_I",
       "KC_O",
       "KC_P",
-      "KC_DEL",
+      "KC_BSLS",
       "KC_ESC",
       "KC_A",
       "KC_S",
@@ -65,7 +65,7 @@
       "KC_RALT",
       "KC_RCTL",
       "MO(2)",
-      "KC_APP"
+      "KC_DEL"
     ],
     [
       "KC_TRNS",
@@ -91,7 +91,7 @@
       "KC_8",
       "KC_9",
       "KC_0",
-      "KC_BSLS",
+      "KC_TRNS",
       "KC_TRNS",
       "KC_EXLM",
       "KC_AT",
