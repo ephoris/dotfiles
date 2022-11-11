@@ -6,13 +6,10 @@ local cmd = vim.cmd
 local g = vim.g
 local api = vim.api
 
-o.mouse = 'a'
+g.do_filetype_lua = 1
 
--- color scheme stuff
+o.mouse = 'a'
 o.termguicolors = true
-g.gruvbox_material_background = "medium"
-cmd([[colorscheme gruvbox-material]])
-api.nvim_set_option('background', 'dark')
 
 o.number = true
 o.cursorline = true

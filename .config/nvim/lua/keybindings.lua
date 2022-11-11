@@ -59,3 +59,5 @@ key_map('n', '<C-h>', '<C-w>h', key_opts)
 key_map('n', '<C-j>', '<C-w>j', key_opts)
 key_map('n', '<C-k>', '<C-w>k', key_opts)
 key_map('n', '<C-l>', '<C-w>l', key_opts)
+
+key_map('n', '<leader>gl', ':LazyGit<CR>', key_opts)

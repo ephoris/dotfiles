@@ -25,7 +25,7 @@ require('packer').startup(function(use)
 
     -- Display
     use 'f-person/auto-dark-mode.nvim'
-    use 'sainnhe/gruvbox-material'
+    use 'ellisonleao/gruvbox.nvim'
     use 'sainnhe/everforest'
     use 'kyazdani42/nvim-web-devicons'
     use 'kyazdani42/nvim-tree.lua'
@@ -34,6 +34,7 @@ require('packer').startup(function(use)
     use 'nvim-treesitter/nvim-treesitter'
 
     -- Telescope
+    use 'kdheepak/lazygit.nvim'
     use {'nvim-telescope/telescope.nvim', requires = 'nvim-lua/plenary.nvim'}
     use 'nvim-telescope/telescope-file-browser.nvim'
     use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'}
@@ -69,12 +70,7 @@ require('packer').startup(function(use)
     use 'folke/twilight.nvim'
     use 'petertriho/nvim-scrollbar'
     use 'kevinhwang91/nvim-hlslens'
-    use {
-        'numToStr/Comment.nvim',
-        config = function()
-            require('Comment').setup()
-        end
-    }
+    use 'numToStr/Comment.nvim'
 
     -- LaTeX
     use 'lervag/vimtex'
