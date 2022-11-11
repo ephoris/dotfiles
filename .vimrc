@@ -1,65 +1,76 @@
-call plug#begin()
+""""""""""""""""""""""
+" Shortcuts
+""""""""""""""""""""""
+let mapleader = " "
+let g:mapleader = " "
 
-Plug 'morhetz/gruvbox'
+nmap <leader>s :w!<Return>
+nmap <leader>x :x<Return>
 
-Plug 'scrooloose/nerdtree'
-
-Plug 'vim-airline/vim-airline'
-Plug 'Yggdroot/indentLine'
-Plug 'sheerun/vim-polyglot'
- 
-call plug#end()
-
-" --------------------------------------------------------------------------------------------------------------------
-" HEADER defaults
-" --------------------------------------------------------------------------------------------------------------------
+""""""""""""""""""""""
+" Color and Font
+""""""""""""""""""""""
+" Syntax highlghting
 syntax on
 
-set mouse=a
+" Number lines
+set number
+
+" Color Scheme
 set termguicolors
 set background=dark
-colorscheme gruvbox
+colorscheme murphy
 
-set number
-" Highlight line number which cursor sits
-highlight CursorLine gui=NONE cterm=NONE ctermbg=NONE ctermfg=NONE guibg=NONE guifg=NONE
-set cursorline
 
+set encoding=UTF-8
+
+""""""""""""""""""""""
+" Text
+""""""""""""""""""""""
+" Tabs to 4 spaces conversion
 set expandtab
 set tabstop=4
 set shiftwidth=4
 
+" Column limits
 set colorcolumn=121
 set tw=120
-set nowrap
-set linebreak
 
+set linebreak
+set nolist
+set nowrap
+
+" Folding for code
+set foldmethod=syntax
+set foldlevelstart=20
+
+""""""""""""""""""""""
+" Searching
+""""""""""""""""""""""
+" Highlighted search on
 set hlsearch
+
+" Ignore cases for searching
 set ignorecase
 
+" Makes search act like search in modern browsers
+set incsearch
+
+""""""""""""""""""""""
+" No back ups
+""""""""""""""""""""""
 set nobackup
 set nowb
 set noswapfile
 
-" --------------------------------------------------------------------------------------------------------------------
-" HEADER vim-airline
-" --------------------------------------------------------------------------------------------------------------------
-let g:airline_theme='gruvbox'
-let g:airline#extensions#tabline#enabled=1
-let g:airline#extensions#tabline#formatter='unique_tail'
-let g:airline_powerline_fonts=1
+"""""""""""""""""""""""
+" Spell checking
+"""""""""""""""""""""""
+" Pressing ,ss will toggle and untoggle spell checking
+map <leader>ss :setlocal spell!<cr>
 
-" --------------------------------------------------------------------------------------------------------------------
-" HEADER shortcuts
-" --------------------------------------------------------------------------------------------------------------------
-let mapleader = " "
-
-nmap <silent> <leader>s :w<CR>
-nmap <silent> <leader>e :NERDTreeToggle<CR>
-nmap <silent> <leader>n :tabnew<CR>
-nmap <silent> <leader>h :nohl<CR>
-
-" --------------------------------------------------------------------------------------------------------------------
-" HEADER nerdtree
-" --------------------------------------------------------------------------------------------------------------------
-let g:NERDTreeWinPos = "right"
+" Shortcuts
+map <leader>sn ]s
+map <leader>sn [s
+map <leader>sa zg
+map <leader>s= z=
