@@ -5,7 +5,7 @@ local has = vim.fn.has
 vim.g.is_mac = (has("mac")
     or has("macunix")
     or has("gui_macvim")
-    or vim.fn.system("uname"):find("^darwin") ~= nil)
+    or vim.fn.system("uname"):find("darwin") ~= nil)
 
 if(vim.g.is_mac)
 then
@@ -13,8 +13,7 @@ then
     auto_dark_mode.setup({
         set_dark_mode = function()
             vim.api.nvim_set_option('background', 'dark')
-            vim.g.gruvbox_material_background = 'medium'
-            vim.cmd([[colorscheme gruvbox-material]])
+            vim.cmd([[colorscheme gruvbox]])
         end,
         set_light_mode = function()
             vim.api.nvim_set_option('background', 'light')
