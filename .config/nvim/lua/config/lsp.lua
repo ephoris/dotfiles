@@ -13,6 +13,7 @@ local on_attach = function(_, bufnr)
 
     require('lsp_signature').on_attach()
     buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+    buf_set_option('formatexpr', 'v:lua.vim.lsp.formatexpr()')
 
     buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
     buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
@@ -64,8 +65,9 @@ for _, server_name in ipairs(require('mason-lspconfig').get_installed_servers())
     end
 end
 
--- require("null-ls").setup({
---     sources = {
---         require("null-ls").builtins.completion.spell,
---     },
--- })
+require("null-ls").setup({
+    sources = {
+        require("null-ls").builtins.completion.spell,
+        require("null-ls").builtins.formatting.autopep8,
+    },
+})

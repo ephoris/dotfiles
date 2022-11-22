@@ -12,6 +12,14 @@ require('zen-mode').setup{
           cursorlineopt = 'number',
           scrolloff = 99
         }
+    },
+    plugins = {
+        options = {
+          enabled = true,
+          ruler = false,
+          showcmd = false,
+        },
+        twilight = { enabled = false },
     }
 }
 
