@@ -31,7 +31,7 @@ o.linebreak = true
 o.hlsearch = true
 o.ignorecase = true
 o.smartcase = true
-o.signcolumn = "number"
+ o.signcolumn = "yes"
 
 o.foldmethod = "expr"
 o.foldexpr = "nvim_treesitter#foldexpr()"

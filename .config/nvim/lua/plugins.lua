@@ -59,8 +59,8 @@ require('packer').startup(function(use)
     use 'ray-x/lsp_signature.nvim'
     use 'kkoomen/vim-doge'
 
-
     -- Editor Plugins
+    use 'lewis6991/gitsigns.nvim'
     use 'akinsho/toggleterm.nvim'
     use 'windwp/nvim-autopairs'
     use 'machakann/vim-sandwich'
