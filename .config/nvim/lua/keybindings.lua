@@ -55,9 +55,9 @@ key_map('n', '#', [[#<Cmd>lua require('hlslens').start()<CR>]], key_opts)
 key_map('n', 'g*', [[g*<Cmd>lua require('hlslens').start()<CR>]], key_opts)
 key_map('n', 'g#', [[g#<Cmd>lua require('hlslens').start()<CR>]], key_opts)
 
-key_map('n', '<C-h>', '<C-w>h<C-w>', key_opts)
-key_map('n', '<C-j>', '<C-w>j<C-w>', key_opts)
-key_map('n', '<C-k>', '<C-w>k<C-w>', key_opts)
-key_map('n', '<C-l>', '<C-w>l<C-w>', key_opts)
+key_map('n', '<C-h>', '<C-w>h', key_opts)
+key_map('n', '<C-j>', '<C-w>j', key_opts)
+key_map('n', '<C-k>', '<C-w>k', key_opts)
+key_map('n', '<C-l>', '<C-w>l', key_opts)
 
 key_map('n', '<leader>gl', ':LazyGit<CR>', key_opts)
