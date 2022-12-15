@@ -5,22 +5,22 @@ local packer_bootstrap = false
 local packer_install_path = vim.fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
 
 if vim.fn.empty(vim.fn.glob(packer_install_path)) > 0 then
-	packer_bootstrap = true
-	vim.fn.system {
-		"git",
-		"clone",
-		"--depth",
-		"1",
-		"https://github.com/wbthomason/packer.nvim",
-		packer_install_path,
-	}
-	vim.o.runtimepath = vim.fn.stdpath "data" .. "/site/pack/*/start/*," .. vim.o.runtimepath
+    packer_bootstrap = true
+    vim.fn.system {
+        "git",
+        "clone",
+        "--depth",
+        "1",
+        "https://github.com/wbthomason/packer.nvim",
+        packer_install_path,
+    }
+    vim.o.runtimepath = vim.fn.stdpath "data" .. "/site/pack/*/start/*," .. vim.o.runtimepath
 end
 
 require('packer').startup(function(use)
     if packer_bootstrap then
-		require('packer').sync()
-	end
+        require('packer').sync()
+    end
     use 'wbthomason/packer.nvim'
 
     -- Display
@@ -53,8 +53,8 @@ require('packer').startup(function(use)
     use 'simrat39/rust-tools.nvim'
     -- Snippets
     use 'L3MON4D3/LuaSnip'
-	use 'rafamadriz/friendly-snippets'
-	use 'saadparwaiz1/cmp_luasnip'
+    use 'rafamadriz/friendly-snippets'
+    use 'saadparwaiz1/cmp_luasnip'
     use 'arkav/lualine-lsp-progress'
     use 'ray-x/lsp_signature.nvim'
     use 'kkoomen/vim-doge'

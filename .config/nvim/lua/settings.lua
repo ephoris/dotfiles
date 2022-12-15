@@ -31,13 +31,13 @@ o.linebreak = true
 o.hlsearch = true
 o.ignorecase = true
 o.smartcase = true
-o.signcolumn = "yes"
+o.signcolumn = 'yes'
 o.splitright = true
 o.splitbelow = true
 
-o.foldmethod = "expr"
-o.foldexpr = "nvim_treesitter#foldexpr()"
-o.foldlevel = 20
+o.foldmethod = 'expr'
+o.foldexpr = 'nvim_treesitter#foldexpr()'
+o.foldenable = false
 
 o.showmode = false
 o.undofile = true
