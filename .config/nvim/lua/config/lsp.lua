@@ -57,13 +57,25 @@ local rust_opts = {
     server = default_opts
 }
 
-for _, server_name in ipairs(require('mason-lspconfig').get_installed_servers()) do
-    if server_name == "rust-analyzer" then
-        require('rust-tools').setup(rust_opts)
-    else
+require('mason-lspconfig').setup_handlers({
+    function (server_name)
         require('lspconfig')[server_name].setup(default_opts)
-    end
-end
+    end,
+    ['rust_analyzer'] = function ()
+        require('rust-tools').setup(rust_opts)
+    end,
+    ["sumneko_lua"] = function ()
+        require('lspconfig').sumneko_lua.setup {
+            settings = {
+                Lua = {
+                    diagnostics = {
+                        globals = { "vim" }
+                    }
+                }
+            }
+        }
+    end,
+})
 
 require("null-ls").setup({
     sources = {

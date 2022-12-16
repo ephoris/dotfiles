@@ -104,8 +104,9 @@ cmp.setup({
         { name = 'nvim_diagnostic' },
         { name = 'nvim_lsp' },
         { name = 'luasnip' },
-        { name = 'buffer' },
         { name = 'path' },
+    }, {
+        { name = 'buffer' },
     })
 })
 
