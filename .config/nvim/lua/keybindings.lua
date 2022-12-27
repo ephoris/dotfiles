@@ -46,6 +46,7 @@ key_map('n', '<leader>fz', ':Telescope current_buffer_fuzzy_find<CR>', key_opts)
 key_map('n', '<leader>fs', ':Telescope grep_string<CR>', key_opts)
 key_map('n', '<leader>fv', ':Telescope lsp_document_symbols<CR>', key_opts)
 key_map('n', '<leader>fe', ':Telescope file_browser<CR>', key_opts)
+key_map('n', '<leader>fh', ':Telescope help_tags<CR>', key_opts)
 
 
 key_map('n', 'n', [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]], key_opts)

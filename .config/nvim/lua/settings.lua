@@ -2,9 +2,7 @@
 -- HEADER settings (CLASSIC VIM)
 ------------------------------------------------------------------------------
 local o = vim.o
-local cmd = vim.cmd
 local g = vim.g
-local api = vim.api
 
 g.do_filetype_lua = 1
 
@@ -35,9 +33,9 @@ o.signcolumn = 'yes'
 o.splitright = true
 o.splitbelow = true
 
-o.foldmethod = 'expr'
-o.foldexpr = 'nvim_treesitter#foldexpr()'
-o.foldenable = false
+vim.wo.foldmethod = 'expr'
+vim.wo.foldexpr = 'nvim_treesitter#foldexpr()'
+vim.wo.foldenable = false
 
 o.showmode = false
 o.undofile = true

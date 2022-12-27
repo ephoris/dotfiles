@@ -65,15 +65,17 @@ require('mason-lspconfig').setup_handlers({
         require('rust-tools').setup(rust_opts)
     end,
     ["sumneko_lua"] = function ()
-        require('lspconfig').sumneko_lua.setup {
+        require('lspconfig').sumneko_lua.setup({
             settings = {
                 Lua = {
                     diagnostics = {
                         globals = { "vim" }
                     }
                 }
-            }
-        }
+            },
+            on_attach = on_attach,
+            capabilities = capabilities,
+        })
     end,
 })
 
