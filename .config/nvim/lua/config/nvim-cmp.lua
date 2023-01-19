@@ -5,7 +5,7 @@ local cmp = require('cmp')
 local luasnip = require('luasnip')
 require("luasnip.loaders.from_vscode").lazy_load()
 
-vim.opt.completeopt = 'menu,menuone,noselect'
+vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
 
 local has_words_before = function()
     local line, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -52,9 +52,11 @@ cmp.setup({
         format = function(entry, item)
             item.kind = lsp_symbols[item.kind]
             item.menu = ({
-                buffer = "[Buffer]",
                 nvim_lsp = "[LSP]",
-                luasnip = "[Snippet]",
+                luasnip = "[Snip]",
+                buffer = "[Buffer]",
+                omni = (vim.inspect(item.menu):gsub('%"', "")),
+                path = "[Path]",
             })[entry.source.name]
             return item
         end,
@@ -101,14 +103,15 @@ cmp.setup({
         ['<C-f>'] = cmp.mapping.scroll_docs(4),
     },
     sources = cmp.config.sources({
-        { name = 'nvim_diagnostic' },
-        { name = 'nvim_lsp' },
-        { name = 'luasnip' },
-        { name = 'path' },
-    }, {
-        { name = 'buffer' },
+        { name = 'omni', filetype = 'tex'},
+        { name = 'nvim_lsp'},
+        { name = 'nvim_diagnostic'},
+        { name = 'luasnip', keyword_length = 2},
+        { name = 'path'},
+        { name = 'buffer', keyword_length = 3},
     })
 })
+
 
 local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 cmp.event:on(
