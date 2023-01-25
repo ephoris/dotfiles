@@ -1,4 +1,4 @@
-require('config/vim-tex')
+require('config/vimtex')
 require('config/gruvbox')
 require('config/auto-dark-mode')
 require('config/indent-blankline')

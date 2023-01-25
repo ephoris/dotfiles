@@ -74,16 +74,6 @@ require('mason-lspconfig').setup_handlers({
             capabilities = capabilities,
         })
     end,
-    -- ['ltex'] = function ()
-    --     require('lspconfig').ltex.setup({
-    --         settings = {
-    --             ltex = {
-    --                 language = 'en',
-    --             }
-    --         },
-    --     capabilities = capabilities
-    --     })
-    -- end,
     function (server_name)
         require('lspconfig')[server_name].setup(default_opts)
     end,

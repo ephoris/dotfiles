@@ -8,7 +8,17 @@ require('telescope').setup({
                 ['<C-h>'] = 'which_key'
             }
         },
-        layout_strategy = 'vertical'
+        layout_config = {
+            vertical = {
+                results_height = 0.9,
+                preview_height = 0.75,
+                mirror = true,
+                prompt_position = 'top'
+            },
+            width = 0.95,
+            height = 0.95,
+        },
+        layout_strategy = 'vertical',
     }
 })
 
