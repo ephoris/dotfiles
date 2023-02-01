@@ -33,9 +33,9 @@ o.signcolumn = 'yes'
 o.splitright = true
 o.splitbelow = true
 
-vim.wo.foldmethod = 'expr'
-vim.wo.foldexpr = 'nvim_treesitter#foldexpr()'
-vim.wo.foldenable = false
+o.foldlevel = 99
+o.foldlevelstart = 99
+o.foldenable = true
 
 o.showmode = false
 o.undofile = true

@@ -74,6 +74,7 @@ require('packer').startup(function(use)
     use {'petertriho/nvim-scrollbar'}
     use {'kevinhwang91/nvim-hlslens'}
     use {'numToStr/Comment.nvim'}
+    use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async'}
 
     -- LaTeX
     use {'lervag/vimtex'}
