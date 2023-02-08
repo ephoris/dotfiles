@@ -55,7 +55,6 @@ cmp.setup({
                 nvim_lsp = "[LSP]",
                 luasnip = "[Snip]",
                 buffer = "[Buffer]",
-                omni = (vim.inspect(item.menu):gsub('%"', "")),
                 path = "[Path]",
             })[entry.source.name]
             return item
@@ -103,7 +102,6 @@ cmp.setup({
         ['<C-f>'] = cmp.mapping.scroll_docs(4),
     },
     sources = cmp.config.sources({
-        { name = 'omni', filetype = 'tex'},
         { name = 'nvim_lsp'},
         { name = 'nvim_diagnostic'},
         { name = 'luasnip', keyword_length = 2},

@@ -33,6 +33,7 @@ o.signcolumn = 'yes'
 o.splitright = true
 o.splitbelow = true
 
+o.foldcolumn = '0'
 o.foldlevel = 99
 o.foldlevelstart = 99
 o.foldenable = true

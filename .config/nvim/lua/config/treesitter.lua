@@ -6,7 +6,4 @@ require('nvim-treesitter.configs').setup({
         enable = true,
         disable = {'latex'}
     },
-    indent = {
-        enable = true,
-    }
 })
