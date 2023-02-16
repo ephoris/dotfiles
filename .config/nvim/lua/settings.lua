@@ -41,3 +41,5 @@ o.foldenable = true
 o.showmode = false
 o.undofile = true
 o.laststatus = 3
+
+o.cmdheight = 0

@@ -65,3 +65,5 @@ key_map('n', '<C-l>', '<C-w>l', key_opts)
 
 vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
 vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
+
+key_map('t', '<C-w>', '<C-\\><C-N>', key_opts)

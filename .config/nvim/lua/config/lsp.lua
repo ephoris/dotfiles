@@ -40,13 +40,12 @@ local default_opts = {
     on_attach = on_attach,
     capabilities = capabilities,
     settings = {
-        ["rust-analyzer"] = {
-            checkOnSave = {
-                command = "clippy",
-                allFeatures = true,
+        Lua = {
+            diagnostics = {
+                globals = { "vim" }
             },
-        }
-    }
+        },
+    },
 }
 
 local rust_opts = {
@@ -64,19 +63,6 @@ local rust_opts = {
 require('mason-lspconfig').setup_handlers({
     ['rust_analyzer'] = function ()
         require('rust-tools').setup(rust_opts)
-    end,
-    ["sumneko_lua"] = function ()
-        require('lspconfig').sumneko_lua.setup({
-            settings = {
-                Lua = {
-                    diagnostics = {
-                        globals = { "vim" }
-                    }
-                }
-            },
-            on_attach = on_attach,
-            capabilities = capabilities,
-        })
     end,
     function (server_name)
         require('lspconfig')[server_name].setup(default_opts)
