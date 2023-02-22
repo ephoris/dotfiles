@@ -26,6 +26,7 @@ require('packer').startup(function(use)
     -- Display
     use {'f-person/auto-dark-mode.nvim'}
     use {'ellisonleao/gruvbox.nvim'}
+    use { "catppuccin/nvim", as = "catppuccin" }
     use {'sainnhe/everforest'}
     use {'kyazdani42/nvim-web-devicons'}
     use {'kyazdani42/nvim-tree.lua'}

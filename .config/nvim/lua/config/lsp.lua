@@ -71,7 +71,6 @@ require('mason-lspconfig').setup_handlers({
 
 require("null-ls").setup({
     sources = {
-        require("null-ls").builtins.completion.spell,
         require("null-ls").builtins.formatting.autopep8,
     },
 })
