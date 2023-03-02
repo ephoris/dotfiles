@@ -47,7 +47,7 @@ key_map('n', '<leader>fs', ':Telescope grep_string<CR>', key_opts)
 key_map('n', '<leader>fv', ':Telescope lsp_document_symbols<CR>', key_opts)
 key_map('n', '<leader>fe', ':Telescope file_browser<CR>', key_opts)
 key_map('n', '<leader>fh', ':Telescope help_tags<CR>', key_opts)
-key_map('n', '<leader>fl', ':lua require("telescope").extensions.lazygit.lazygit()', key_opts)
+key_map('n', '<leader>fl', ':lua require("telescope").extensions.lazygit.lazygit()<CR>', key_opts)
 
 key_map('n', '<leader>gl', ':LazyGit<CR>', key_opts)
 
