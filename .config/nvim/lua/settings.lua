@@ -10,6 +10,7 @@ o.mouse = 'a'
 o.termguicolors = true
 
 o.number = true
+o.relativenumber = true
 o.cursorline = true
 o.cursorlineopt = 'number'
 
@@ -43,3 +44,4 @@ o.undofile = true
 o.laststatus = 3
 
 o.cmdheight = 0
+
