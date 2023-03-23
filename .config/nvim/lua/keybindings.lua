@@ -51,16 +51,16 @@ key_map('n', '<leader>fl', ':lua require("telescope").extensions.lazygit.lazygit
 
 key_map('n', '<leader>gl', ':LazyGit<CR>', key_opts)
 
--- key_map('n', 'n', [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]], key_opts)
--- key_map('n', 'N', [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]], key_opts)
--- key_map('n', '*', [[*<Cmd>lua require('hlslens').start()<CR>]], key_opts)
--- key_map('n', '#', [[#<Cmd>lua require('hlslens').start()<CR>]], key_opts)
--- key_map('n', 'g*', [[g*<Cmd>lua require('hlslens').start()<CR>]], key_opts)
--- key_map('n', 'g#', [[g#<Cmd>lua require('hlslens').start()<CR>]], key_opts)
+key_map('n', 'n', [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]], key_opts)
+key_map('n', 'N', [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]], key_opts)
+key_map('n', '*', [[*<Cmd>lua require('hlslens').start()<CR>]], key_opts)
+key_map('n', '#', [[#<Cmd>lua require('hlslens').start()<CR>]], key_opts)
+key_map('n', 'g*', [[g*<Cmd>lua require('hlslens').start()<CR>]], key_opts)
+key_map('n', 'g#', [[g#<Cmd>lua require('hlslens').start()<CR>]], key_opts)
 
 key_map('n', '<C-h>', '<C-w>h', key_opts)
 key_map('n', '<C-j>', '<C-w>j', key_opts)
 key_map('n', '<C-k>', '<C-w>k', key_opts)
 key_map('n', '<C-l>', '<C-w>l', key_opts)
 
--- key_map('t', '<C-w>', '<C-\\><C-N>', key_opts)
+key_map('t', '<C-w>', '<C-\\><C-N>', key_opts)

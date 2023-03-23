@@ -1,14 +1,14 @@
-local M = {
-    "jose-elias-alvarez/null-ls.nvim",
+return {
     "williamboman/mason.nvim",
-    "williamboman/mason-lspconfig.nvim",
-    "ray-x/lsp_signature.nvim",
-    "simrat39/rust-tools.nvim",
-}
-
-function M.config()
-    require("mason").setup()
-    require("mason-lspconfig").setup()
+    dependencies = {
+        "williamboman/mason-lspconfig.nvim",
+        "jose-elias-alvarez/null-ls.nvim",
+        "ray-x/lsp_signature.nvim",
+        "simrat39/rust-tools.nvim",
+    },
+    config = function()
+    require("mason").setup({})
+    require("mason-lspconfig").setup({})
 
     local on_attach = function(_, bufnr)
         local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
@@ -82,6 +82,5 @@ function M.config()
     })
 
     require('ufo').setup()
-end
-
-return M
+    end,
+}
