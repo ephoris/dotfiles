@@ -1,8 +1,11 @@
 return {
     "folke/zen-mode.nvim",
     dependencies = {"folke/twilight.nvim"},
+    keys = {
+        {"<leader>z", "<cmd>ZenMode<CR>", desc="ZenMode"}
+    },
     config = function()
-        require('zen-mode').setup{
+        require('zen-mode').setup({
             window = {
                 backdrop = 0.95,
                 width = 128,
@@ -22,6 +25,6 @@ return {
                 },
                 twilight = { enabled = false },
             }
-        }
+        })
     end,
 }

@@ -4,8 +4,6 @@
 local key_opts = {noremap = true, silent = true}
 local key_map = vim.api.nvim_set_keymap
 
-vim.g.mapleader = " "
-
 key_map('n', '<leader>e',  ':NvimTreeToggle<CR>', key_opts)
 key_map('n', '<leader>s',  ':w<CR>', key_opts)
 key_map('n', '<leader>h',  ':nohl<CR>', key_opts)
@@ -33,8 +31,6 @@ key_map('n', '<leader>bb', ':BufferOrderByBufferNumber<CR>', key_opts)
 key_map('n', '<leader>bd', ':BufferOrderByDirectory<CR>', key_opts)
 key_map('n', '<leader>bl', ':BufferOrderByLanguage<CR>', key_opts)
 
--- key_map('n', '<leader>z', ':ZenMode<CR>', key_opts)
-
 -- Telescope shortcuts
 key_map('n', '<leader>ft', ':Telescope<CR>', key_opts)
 key_map('n', '<leader>ff', ':Telescope find_files<CR>', key_opts)
@@ -47,12 +43,17 @@ key_map('n', '<leader>fs', ':Telescope grep_string<CR>', key_opts)
 key_map('n', '<leader>fv', ':Telescope lsp_document_symbols<CR>', key_opts)
 key_map('n', '<leader>fe', ':Telescope file_browser<CR>', key_opts)
 key_map('n', '<leader>fh', ':Telescope help_tags<CR>', key_opts)
-key_map('n', '<leader>fl', ':lua require("telescope").extensions.lazygit.lazygit()<CR>', key_opts)
+key_map('n', '<leader>fl',
+    ':lua require("telescope").extensions.lazygit.lazygit()<CR>', key_opts)
 
 key_map('n', '<leader>gl', ':LazyGit<CR>', key_opts)
 
-key_map('n', 'n', [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]], key_opts)
-key_map('n', 'N', [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]], key_opts)
+key_map('n', 'n',
+    [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]],
+    key_opts)
+key_map('n', 'N',
+    [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]],
+    key_opts)
 key_map('n', '*', [[*<Cmd>lua require('hlslens').start()<CR>]], key_opts)
 key_map('n', '#', [[#<Cmd>lua require('hlslens').start()<CR>]], key_opts)
 key_map('n', 'g*', [[g*<Cmd>lua require('hlslens').start()<CR>]], key_opts)
