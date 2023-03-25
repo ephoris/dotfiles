@@ -3,7 +3,7 @@ return {
     cmd = "Telescope",
     dependencies = {
         {'nvim-lua/plenary.nvim'},
-        {'kdheepak/lazygit.nvim'},
+        {'kdheepak/lazygit.nvim', cmd = "LazyGit"},
         {'nvim-telescope/telescope-file-browser.nvim'},
         {'nvim-telescope/telescope-fzf-native.nvim', build = 'make'}
     },
