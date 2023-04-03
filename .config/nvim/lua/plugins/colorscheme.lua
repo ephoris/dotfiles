@@ -25,15 +25,13 @@ return {
         event = "VeryLazy"
     },
 
+    { "catppuccin/nvim",
+        event = "VeryLazy",
+    },
+
     { "f-person/auto-dark-mode.nvim",
         cond = function()
-            local has = vim.fn.has
-            vim.g.is_mac = (
-                has("mac")
-                or has("macunix")
-                or has("gui_macvim")
-                or vim.fn.system("uname"):find("darwin") ~= nil)
-            return vim.g.is_mac
+            return vim.loop.os_uname().sysname == "Darwin"
         end,
         config = function()
             local auto_dark_mode = require('auto-dark-mode')
