@@ -30,15 +30,15 @@ function M.config()
         buf_set_keymap('n', 'gD',
             '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
         buf_set_keymap('n', 'gd',
-            '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+            '<cmd>Telescope lsp_definitions<CR>', opts)
         buf_set_keymap('n', 'gr',
-            '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+            '<cmd>Telescope lsp_references<CR>', opts)
         buf_set_keymap('n', 'gi',
-            '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+            '<cmd>Telescope lsp_implementations<CR>', opts)
         buf_set_keymap('n', 'gk',
             '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
         buf_set_keymap('n', '<space>D',
-            '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+            '<cmd>Telescope lsp_type_definitions<CR>', opts)
         buf_set_keymap('n', '<space>rn',
             '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
         buf_set_keymap('n', '<space>ca',
@@ -98,7 +98,6 @@ function M.config()
     require("null-ls").setup({
         sources = {
             require("null-ls").builtins.formatting.autopep8,
-            require("null-ls").builtins.formatting.clang_format,
         },
     })
 end
