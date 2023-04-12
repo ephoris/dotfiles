@@ -9,8 +9,8 @@ g.do_filetype_lua = 1
 o.mouse = 'a'
 o.termguicolors = true
 
-o.number = false
-o.cursorline = false
+o.number = true
+o.cursorline = true
 o.cursorlineopt = 'number'
 
 o.expandtab = true
