@@ -1,8 +1,8 @@
-------------------------------------------------------------------------------
--- HEADER toggleterm
-------------------------------------------------------------------------------
 return {
     "akinsho/toggleterm.nvim",
+    keys = {
+        {"<C-t>", "<cmd>ToggleTerm<CR>", desc="ToggleTerm"}
+    },
     config = function()
         require("toggleterm").setup({
             open_mapping = [[<C-t>]],

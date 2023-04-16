@@ -1,10 +1,17 @@
 return {
-    { "kyazdani42/nvim-web-devicons" },
+    { "kyazdani42/nvim-web-devicons",
+        event = "VeryLazy",
+    },
+
     { "machakann/vim-sandwich" },
-    { "romgrk/barbar.nvim" },
+
+    { "romgrk/barbar.nvim",
+        event = "VeryLazy",
+    },
 
     { "petertriho/nvim-scrollbar",
         dependencies = {"kevinhwang91/nvim-hlslens"},
+        event = "VeryLazy",
         config = function()
             require('scrollbar').setup()
             require("scrollbar.handlers.search").setup()
@@ -12,6 +19,7 @@ return {
     },
 
     { "windwp/nvim-autopairs",
+        event = "VeryLazy",
         config = function()
             require('nvim-autopairs').setup({
                 disabled_filetypes = {'Telescope-prompt', 'vim'},
@@ -48,6 +56,7 @@ return {
     },
 
     { "lewis6991/gitsigns.nvim",
+        event = "VeryLazy",
         config = function()
             require("gitsigns").setup()
         end,

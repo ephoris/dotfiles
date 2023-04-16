@@ -21,15 +21,12 @@ return {
         end
     },
 
-    { "sainnhe/everforest",
-        event = "VeryLazy"
-    },
-
     { "catppuccin/nvim",
         event = "VeryLazy",
     },
 
     { "f-person/auto-dark-mode.nvim",
+        event = "VeryLazy",
         cond = function()
             return vim.loop.os_uname().sysname == "Darwin"
         end,
