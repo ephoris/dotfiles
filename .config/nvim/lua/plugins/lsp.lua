@@ -3,7 +3,6 @@ local M = {
     dependencies = {
         "williamboman/mason.nvim",
         "williamboman/mason-lspconfig.nvim",
-        "jose-elias-alvarez/null-ls.nvim",
         "ray-x/lsp_signature.nvim",
         "simrat39/rust-tools.nvim",
     },
@@ -93,12 +92,6 @@ function M.config()
         function (server_name)
             require('lspconfig')[server_name].setup(default_opts)
         end,
-    })
-
-    require("null-ls").setup({
-        sources = {
-            require("null-ls").builtins.formatting.black,
-        },
     })
 end
 
