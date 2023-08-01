@@ -72,6 +72,7 @@ function M.config()
                     buffer = "[Buffer]",
                     path = "[Path]",
                 })[entry.source.name]
+                item.abbr = string.sub(item.abbr, 1, 20)
                 return item
             end,
         },
@@ -127,7 +128,7 @@ function M.config()
             { name = 'nvim_diagnostic'},
             { name = 'luasnip', keyword_length = 2},
             { name = 'path'},
-            { name = 'buffer', keyword_length = 3},
+            { name = 'buffer', keyword_length = 3, max_item_count = 5},
         }),
     })
 
