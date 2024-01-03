@@ -36,17 +36,17 @@ function M.config()
             '<cmd>Telescope lsp_implementations<CR>', opts)
         buf_set_keymap('n', 'gk',
             '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-        buf_set_keymap('n', '<space>D',
+        buf_set_keymap('n', '<leader>D',
             '<cmd>Telescope lsp_type_definitions<CR>', opts)
-        buf_set_keymap('n', '<space>rn',
+        buf_set_keymap('n', '<leader>rn',
             '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-        buf_set_keymap('n', '<space>ca',
+        buf_set_keymap('n', '<leader>ca',
             '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-        buf_set_keymap('n', '<space>l',
+        buf_set_keymap('n', '<leader>l',
             '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
-        buf_set_keymap('n', '<space>q',
+        buf_set_keymap('n', '<leader>q',
             '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
-        buf_set_keymap('n', '<space>F',
+        buf_set_keymap('n', '<leader>F',
             '<cmd>lua vim.lsp.buf.format({async=True})<CR>', opts)
         buf_set_keymap('n', 'K',
             '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
