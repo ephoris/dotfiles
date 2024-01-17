@@ -1,24 +1,38 @@
 return {
-    { "kyazdani42/nvim-web-devicons",
-        event = "VeryLazy",
+    {"kyazdani42/nvim-web-devicons"},
+
+    {
+        'kdheepak/lazygit.nvim',
+        cmd = "LazyGit",
+        keys = {
+            {"<leader>gl", "<Cmd>LazyGit<CR>", desc = "LazyGit"}
+        },
     },
 
     {
         "kylechui/nvim-surround",
-        version = "*", -- Use for stability; omit to use `main` branch for the latest features
+        version = "*",
         event = "VeryLazy",
         config = function()
-            require("nvim-surround").setup({
-                -- Configuration here, or leave empty to use defaults
-            })
+            require("nvim-surround").setup()
         end
     },
 
-    { "romgrk/barbar.nvim",
+    {
+        "kevinhwang91/nvim-hlslens",
         event = "VeryLazy",
+        keys = {
+            {'n', [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]]},
+            {'N', [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]]},
+            {'*', [[*<Cmd>lua require('hlslens').start()<CR>]]},
+            {'#', [[#<Cmd>lua require('hlslens').start()<CR>]]},
+            {'g*', [[g*<Cmd>lua require('hlslens').start()<CR>]], desc = "Highlight Next"},
+            {'g#', [[g#<Cmd>lua require('hlslens').start()<CR>]], desc = "Highlight Prev"},
+        }
     },
 
-    { "petertriho/nvim-scrollbar",
+    {
+        "petertriho/nvim-scrollbar",
         dependencies = {"kevinhwang91/nvim-hlslens"},
         event = "VeryLazy",
         config = function()
@@ -27,7 +41,8 @@ return {
         end,
     },
 
-    { "windwp/nvim-autopairs",
+    {
+        "windwp/nvim-autopairs",
         event = "VeryLazy",
         config = function()
             require('nvim-autopairs').setup({
@@ -36,13 +51,16 @@ return {
         end,
     },
 
-    { "numToStr/Comment.nvim",
+    {
+        "numToStr/Comment.nvim",
+        event = "VeryLazy",
         config = function()
             require("Comment").setup()
         end,
     },
 
-    { "folke/which-key.nvim",
+    {
+        "folke/which-key.nvim",
         config = function()
             require("which-key").setup({
                 plugins = {
@@ -55,12 +73,15 @@ return {
         end,
     },
 
-    { "kevinhwang91/nvim-ufo",
+    {
+        "kevinhwang91/nvim-ufo",
         dependencies = "kevinhwang91/promise-async",
+        keys = {
+            {'zR', function() require('ufo').openAllFolds() end, {desc = "Open All Folds"}},
+            {'zM', function() require('ufo').closeAllFolds() end, {desc = "Close All Folds"}}
+        },
         config = function()
             require('ufo').setup()
-            vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
-            vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
         end,
     },
 }

@@ -1,5 +1,6 @@
 local M = {
     'mfussenegger/nvim-dap',
+    event = 'VeryLazy'
 }
 
 M.dependencies = {
@@ -58,8 +59,5 @@ M.keys = {
     { "<leader>dt", function() require("dap").terminate() end, desc = "Terminate" },
     { "<leader>dw", function() require("dap.ui.widgets").hover() end, desc = "Widgets" },
 }
-
-function M.config()
-end
 
 return M
