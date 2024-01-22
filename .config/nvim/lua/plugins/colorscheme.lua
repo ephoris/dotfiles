@@ -17,7 +17,7 @@ return {
                 dim_inactive = false,
             })
             api.nvim_set_option('background', 'dark')
-            cmd([[colorscheme gruvbox]])
+            vim.cmd([[colorscheme gruvbox]])
         end
     },
 
