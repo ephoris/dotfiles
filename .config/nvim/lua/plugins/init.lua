@@ -2,6 +2,28 @@ return {
     {"nvim-tree/nvim-web-devicons"},
 
     {
+        "stevearc/conform.nvim",
+        event = {"BufWritePre"},
+        cmd = {"ConformInfo"},
+        keys = {
+            {"<leader>F",
+            function()
+                require("conform").format({async = true, lsp_fallback = true})
+            end,
+            mode = "",
+            desc = "Format buffer"}
+        },
+        config = function()
+            require("conform").setup({
+                formatters_by_ft = {
+                    python = {"black"}
+                }
+            })
+            vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
+        end
+    },
+
+    {
         'kdheepak/lazygit.nvim',
         cmd = "LazyGit",
         keys = {
