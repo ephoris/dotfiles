@@ -24,12 +24,6 @@ function M.config()
           vim.keymap.set(mode, l, r, opts)
         end
 
-        if client.server_capabilities.inlayHintProvider then
-            vim.lsp.inlay_hint(bufnr, true)
-        else
-            print("Inlay hints unavailable")
-        end
-
         require('lsp_signature').on_attach()
         buf_set_option('formatexpr', 'v:lua.vim.lsp.formatexpr()')
 
