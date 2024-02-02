@@ -15,7 +15,7 @@ return {
         {'<leader>fz', function() require("telescope.builtin").current_buffer_fuzzy_find() end, desc = "Current Buffer Fuzzy Find"},
         {'<leader>fs', function() require("telescope.builtin").grep_string() end, desc = "Grep String"},
         {'<leader>fv', function() require("telescope.builtin").lsp_document_symbols() end, desc = "LSP Doc Symbols"},
-        {'<leader>fe', function() require("telescope.builtin").file_browser() end, desc = "File Browser"},
+        {'<leader>fe', function() require("telescope").extensions.file_browser.file_browser() end, desc = "File Browser"},
         {'<leader>fh', function() require("telescope.builtin").help_tags() end, desc = "Help Tags"},
         {'<leader>fl', function() require("telescope").extensions.lazygit.lazygit() end, desc = "Lazy Git"},
     },
