@@ -22,7 +22,7 @@ o.hidden = true
 
 o.colorcolumn = '80'
 o.textwidth = 80
-o.wrap = false
+o.wrap = true
 o.list = true
 o.linebreak = true
 
