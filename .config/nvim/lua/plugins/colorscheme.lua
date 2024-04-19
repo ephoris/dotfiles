@@ -6,7 +6,7 @@ return {
             local cmd = vim.cmd
             local api = vim.api
             require('gruvbox').setup({
-                contrast = '',  -- [hard, soft, normal='']
+                contrast = 'hard',  -- [hard, soft, normal='']
                 bold = true,
                 italic = {
                     strings = false,
@@ -21,9 +21,7 @@ return {
         end
     },
 
-    { "catppuccin/nvim",
-        event = "VeryLazy",
-    },
+    {"catppuccin/nvim"},
 
     { "f-person/auto-dark-mode.nvim",
         event = "VeryLazy",
