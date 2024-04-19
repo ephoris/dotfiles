@@ -6,7 +6,7 @@ return {
             local cmd = vim.cmd
             local api = vim.api
             require('gruvbox').setup({
-                contrast = 'hard',  -- [hard, soft, normal='']
+                contrast = '',  -- [hard, soft, normal='']
                 bold = true,
                 italic = {
                     strings = false,
