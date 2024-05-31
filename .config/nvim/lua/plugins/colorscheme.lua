@@ -8,6 +8,7 @@ return {
             require('gruvbox').setup({
                 contrast = '',  -- [hard, soft, normal='']
                 bold = true,
+                transparent_mode = true,
                 italic = {
                     strings = false,
                     comments = false,
@@ -21,7 +22,14 @@ return {
         end
     },
 
-    {"catppuccin/nvim"},
+    {
+        "catppuccin/nvim",
+        config = function()
+            require("catppuccin").setup({
+                transparent_background = true
+            })
+        end
+    },
 
     { "f-person/auto-dark-mode.nvim",
         event = "VeryLazy",
