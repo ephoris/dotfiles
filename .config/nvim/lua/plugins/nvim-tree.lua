@@ -13,6 +13,13 @@ return {
             end,
             desc = "Nvim Tree"
         },
+        {
+            "<leader>E",
+            function()
+                require("nvim-tree.api").tree.focus()
+            end,
+            desc = "Nvim Tree"
+        },
     },
     config = function()
         require("nvim-tree").setup {}
