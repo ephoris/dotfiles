@@ -8,7 +8,7 @@ return {
             open_mapping = [[<C-t>]],
             direction = 'horizontal',
             shade_terminals = false,
-            size = 25,
+            size = 16,
             float_opts = {
                 border = 'curved',
                 width = 160,

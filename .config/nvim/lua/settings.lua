@@ -17,8 +17,8 @@ o.shiftwidth = 4
 o.smartindent = true
 o.hidden = true
 
-o.colorcolumn = '80'
-o.textwidth = 80
+o.colorcolumn = '88'
+o.textwidth = 88
 o.wrap = false
 o.list = true
 o.linebreak = true
