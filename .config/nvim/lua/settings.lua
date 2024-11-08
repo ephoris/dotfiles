@@ -1,6 +1,3 @@
-------------------------------------------------------------------------------
--- HEADER settings (CLASSIC VIM)
-------------------------------------------------------------------------------
 local o = vim.o
 local g = vim.g
 
@@ -22,7 +19,7 @@ o.hidden = true
 
 o.colorcolumn = '80'
 o.textwidth = 80
-o.wrap = true
+o.wrap = false
 o.list = true
 o.linebreak = true
 
@@ -43,4 +40,3 @@ o.undofile = true
 o.laststatus = 3
 
 o.cmdheight = 1
-

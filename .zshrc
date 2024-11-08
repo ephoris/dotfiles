@@ -46,3 +46,5 @@ export PATH="$HOME/.local/bin:$PATH"
 export UID=$(id -u)
 export GID=$(id -g)
 
+setopt ignore_eof
+PAGER="less -S"
