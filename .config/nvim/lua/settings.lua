@@ -40,3 +40,5 @@ o.undofile = true
 o.laststatus = 3
 
 o.cmdheight = 1
+
+g.editorconfig = true
