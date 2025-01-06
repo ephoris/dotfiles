@@ -31,13 +31,19 @@ return {
                     vertical = {
                         results_height = 0.9,
                         preview_height = 0.6,
+                        preview_cutoff = 0,
                         mirror = true,
+                        prompt_position = 'bottom'
+                    },
+                    horizontal = {
+                        preview_cutoff = 0,
+                        preview_width = 0.6,
                         prompt_position = 'bottom'
                     },
                     width = 0.95,
                     height = 0.95,
                 },
-                layout_strategy = 'vertical',
+                layout_strategy = 'horizontal',
             }
         })
         require('telescope').load_extension('fzf')
