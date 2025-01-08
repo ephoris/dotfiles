@@ -112,6 +112,17 @@ return {
         event = "InsertEnter",
         config = function()
             require("copilot").setup({
+                panel = {
+                    enabled = true,
+                    auto_refresh = false,
+                        keymap = {
+                        jump_prev = "[[",
+                        jump_next = "]]",
+                        accept = "<CR>",
+                        refresh = "gr",
+                        open = "<leader>cp"
+                    },
+                },
                 suggestion = {
                     enabled = true,
                     auto_trigger = false,
