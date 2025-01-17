@@ -7,13 +7,13 @@ return {
     animate = { enabled = false },
     bigfile = { enabled = true },
     dashboard = { enabled = true },
-    indent = { enabled = true, animate = { enabled = false }, },
+    indent = { enabled = true, animate = { enabled = false } },
     input = { enabled = true },
     lazygit = { enabled = true },
     notifier = { enabled = true },
     picker = { enabled = true },
     quickfile = { enabled = true },
-    statuscolumn = { enabled = true },
+    terminal = { enabled = true }
   },
   keys = function()
     local Snacks = require('snacks')
@@ -22,6 +22,7 @@ return {
       { "<leader>]",  function() Snacks.notifier.show_history() end,       desc = "Notifier History" },
       { "<leader>/",  function() Snacks.picker.grep() end,                 desc = "Grep" },
       { "<leader>:",  function() Snacks.picker.command_history() end,      desc = "Command History" },
+      { "<c-/>",      function() Snacks.terminal() end,                    desc = "Toggle Terminal" },
       -- find
       { "<leader>fb", function() Snacks.picker.buffers() end,              desc = "Buffers" },
       { "<leader>ff", function() Snacks.picker.files() end,                desc = "Find Files" },
@@ -48,6 +49,7 @@ return {
   end,
   init = function()
     local Snacks = require('snacks')
+    vim.opt.listchars:append('lead:·')
     vim.api.nvim_create_autocmd("User", {
       pattern = "VeryLazy",
       callback = function()

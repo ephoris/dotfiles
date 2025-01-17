@@ -8,7 +8,9 @@ return {
     ---@type blink.cmp.Config
     opts = {
       appearance = { use_nvim_cmp_as_default = false },
-      keymap = { preset = "super-tab" },
+      keymap = {
+        preset = "super-tab",
+      },
       completion = {
         documentation = {
           auto_show = true,
@@ -19,6 +21,11 @@ return {
       snippets = { preset = 'luasnip' },
       sources = {
         default = { 'lsp', 'path', 'snippets', 'buffer' },
+        providers = {
+          snippets = {
+            min_keyword_length = 2,
+          },
+        },
       },
     },
     opts_extend = { "sources.default" }

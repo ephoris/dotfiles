@@ -12,4 +12,4 @@ map('n', '<C-j>', '<C-w>j', { remap = true, desc = "Lower Window" })
 map('n', '<C-k>', '<C-w>k', { remap = true, desc = "Upper Window" })
 map('n', '<C-l>', '<C-w>l', { remap = true, desc = "Right Window" })
 
-map('t', '<C-w>', '<C-\\><C-N>', { desc = "Exit Terminal" })
+map('t', '<c-/>', '<c-\\><c-n>', { desc = "Normal Mode Terminal" })

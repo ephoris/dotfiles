@@ -23,14 +23,6 @@ return {
     end
   },
 
-  -- { -- lazygit UI
-  --   'kdheepak/lazygit.nvim',
-  --   cmd = "LazyGit",
-  --   keys = {
-  --     { "<leader>gl", "<Cmd>LazyGit<CR>", desc = "LazyGit" }
-  --   },
-  -- },
-
   { -- nvim-surround for easy nav
     "kylechui/nvim-surround",
     event = "VeryLazy",
@@ -83,7 +75,7 @@ return {
             jump_next = "]]",
             accept = "<CR>",
             refresh = "gr",
-            open = "<leader>cp"
+            open = "<C-l>"
           },
         },
         suggestion = {
@@ -98,31 +90,6 @@ return {
             next = "<M-]>",
             prev = "<M-[>",
             dismiss = "<C-]>",
-          },
-        },
-      })
-    end,
-  },
-
-  { -- toggleterm.nvim | Add terminal integration
-    "akinsho/toggleterm.nvim",
-    keys = {
-      { "<C-t>", "<cmd>ToggleTerm<CR>", desc = "ToggleTerm" }
-    },
-    config = function()
-      require("toggleterm").setup({
-        open_mapping = [[<C-t>]],
-        direction = 'horizontal',
-        shade_terminals = false,
-        size = 16,
-        float_opts = {
-          border = 'curved',
-          width = 160,
-          height = 80,
-          winblend = 0,
-          highlights = {
-            border = "Normal",
-            background = "Normal",
           },
         },
       })

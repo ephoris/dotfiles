@@ -25,7 +25,6 @@ return {
 
   {
     "kevinhwang91/nvim-hlslens",
-    event = "VeryLazy",
     keys = {
       { 'n',  [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]] },
       { 'N',  [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]] },
@@ -79,8 +78,6 @@ return {
 
   {
     "nvim-tree/nvim-tree.lua",
-    version = "*",
-    event = "VeryLazy",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     keys = {
       { "<leader>e", function() require("nvim-tree.api").tree.toggle() end, desc = "Nvim Tree" },
@@ -147,7 +144,6 @@ return {
 
   {
     "folke/trouble.nvim",
-    opts = {}, -- for default options, refer to the configuration section for custom setup.
     cmd = "Trouble",
     keys = {
       { "<leader>lx", "<cmd>Trouble diagnostics toggle<cr>",                        desc = "Diagnostics (Trouble)" },
