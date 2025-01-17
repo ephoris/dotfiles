@@ -2,6 +2,7 @@ return {
   {
     'saghen/blink.cmp',
     dependencies = { 'rafamadriz/friendly-snippets', 'L3MON4D3/LuaSnip' },
+    event = { "InsertEnter" },
     version = '*',
 
     ---@module 'blink.cmp'
