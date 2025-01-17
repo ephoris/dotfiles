@@ -16,7 +16,6 @@ return {
     terminal = { enabled = true }
   },
   keys = function()
-    local Snacks = require('snacks')
     return {
       { "<leader>,",  function() Snacks.picker.buffers() end,              desc = "Buffers" },
       { "<leader>]",  function() Snacks.notifier.show_history() end,       desc = "Notifier History" },
@@ -48,8 +47,7 @@ return {
     }
   end,
   init = function()
-    local Snacks = require('snacks')
-    vim.opt.listchars:append('lead:·')
+    -- vim.opt.listchars:append('lead:·')
     vim.api.nvim_create_autocmd("User", {
       pattern = "VeryLazy",
       callback = function()
