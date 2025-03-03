@@ -23,7 +23,7 @@ return {
         vim.keymap.set(mode, l, r, opts)
       end
 
-      buf_set_option('formatexpr', 'v:lua.vim.lsp.formatexpr()')
+      -- buf_set_option('formatexpr', 'v:lua.vim.lsp.formatexpr()')
       if client.server_capabilities.inlayHintProvider then
         vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
       end

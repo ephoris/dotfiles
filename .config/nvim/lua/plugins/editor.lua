@@ -186,7 +186,7 @@ return {
     },
     keys = function()
       return {
-        { "<leader>fc", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = "Find Config File" },
+        { "<leader>f{", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = "Find Config File" },
         -- find
         { "<leader>fb", function() Snacks.picker.buffers() end,              desc = "Buffers" },
         { "<leader>ff", function() Snacks.picker.files() end,                desc = "Find Files" },
