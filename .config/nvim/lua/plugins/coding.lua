@@ -16,7 +16,7 @@ return {
     config = function()
       require("conform").setup({
         formatters_by_ft = {
-          python = { "ruff", "black" }
+          python = { "ruff", "ruff_fix", "ruff_organize_imports", "ruff_format" }
         }
       })
       vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
