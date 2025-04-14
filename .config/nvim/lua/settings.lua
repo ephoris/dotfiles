@@ -39,6 +39,6 @@ o.showmode = false
 o.undofile = true
 o.laststatus = 3
 
-o.cmdheight = 1
+o.cmdheight = 0
 
 g.editorconfig = true
