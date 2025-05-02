@@ -143,6 +143,13 @@ return {
   },
 
   {
+    "nvim-treesitter/nvim-treesitter-context",
+    keys = {
+      { "<leader>ut", "<cmd>TSContextToggle<cr>", desc = "Toggle Context" },
+    }
+  },
+
+  {
     "nvim-treesitter/nvim-treesitter",
     config = function()
       require('nvim-treesitter.configs').setup({
