@@ -223,9 +223,11 @@ return {
         { "<leader>fb", function() Snacks.picker.buffers() end,              desc = "Buffers" },
         { "<leader>ff", function() Snacks.picker.files() end,                desc = "Find Files" },
         { "<leader>fr", function() Snacks.picker.recent() end,               desc = "Recent" },
+        { "<leader>fW", function() Snacks.picker.registers() end,            desc = "Registers" },
         { "<leader>fh", function() Snacks.picker.help() end,                 desc = "Help Pages" },
         { "<leader>fc", function() Snacks.picker.command_history() end,      desc = "Command History" },
         { "<leader>fC", function() Snacks.picker.commands() end,             desc = "Commands" },
+        { "<leader>fe", function() Snacks.explorer() end,                    desc = "Commands" },
         -- find via grep
         { "<leader>fl", function() Snacks.picker.lines() end,                desc = "Buffer Lines" },
         { "<leader>fB", function() Snacks.picker.grep_buffers() end,         desc = "Grep Open Buffers" },
@@ -237,10 +239,15 @@ return {
         -- LSP
         { "gd",         function() Snacks.picker.lsp_definitions() end,      desc = "Goto Definition" },
         { "gD",         function() Snacks.picker.lsp_declarations() end,     desc = "Goto Declarations" },
-        { "gr",         function() Snacks.picker.lsp_references() end,       nowait = true,                     desc = "References" },
+        { "gr",         function() Snacks.picker.lsp_references() end,       desc = "References", nowait = true},
         { "gi",         function() Snacks.picker.lsp_implementations() end,  desc = "Goto Implementation" },
         { "gy",         function() Snacks.picker.lsp_type_definitions() end, desc = "Goto T[y]pe Definition" },
         { "<leader>fs", function() Snacks.picker.lsp_symbols() end,          desc = "LSP Symbols" },
+        { "<leader>fd", function() Snacks.picker.diagnostics() end,          desc = "Diagnostics" },
+        { "<leader>fD", function() Snacks.picker.diagnostics_buffer() end,   desc = "Buffer Diagnostics" },
+        -- misc
+        { "<leader>fM", function() Snacks.picker.man() end,                  desc = "Man" },
+        { "<leader>fu", function() Snacks.picker.undo() end,                 desc = "Undo History" },
         -- notifications
         { "<leader>]",  function() Snacks.notifier.show_history() end,       desc = "Notifier History" },
         { "<leader>un", function() Snacks.notifier.hide() end,               desc = "Dismiss All Notifications" },
