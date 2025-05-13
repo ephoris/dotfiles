@@ -187,7 +187,32 @@ return {
       input = { enabled = true },
       lazygit = { enabled = true },
       notifier = { enabled = true },
-      picker = { enabled = true },
+      picker = {
+        enabled = true,
+        layout = {
+          preset = function()
+            return vim.o.columns >= 120 and 'default' or 'vertical'
+          end,
+        },
+        layouts = {
+          default = {
+            layout = {
+              box = "horizontal",
+              width = 0.9,
+              min_width = 120,
+              height = 0.9,
+              {
+                box = "vertical",
+                border = "rounded",
+                title = "{title} {live} {flags}",
+                { win = "input", height = 1, border = "bottom" },
+                { win = "list", border = "none" },
+              },
+              { win = "preview", title = "{preview}", border = "rounded", width = 0.6 },
+            },
+          },
+        },
+      },
       quickfile = { enabled = true },
       terminal = { enabled = true },
     },
