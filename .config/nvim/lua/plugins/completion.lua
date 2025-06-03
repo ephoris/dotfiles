@@ -1,7 +1,11 @@
 return {
   {
     'saghen/blink.cmp',
-    dependencies = { 'rafamadriz/friendly-snippets', 'L3MON4D3/LuaSnip' },
+    dependencies = {
+      'Kaiser-Yang/blink-cmp-avante',
+      'rafamadriz/friendly-snippets',
+      'L3MON4D3/LuaSnip',
+    },
     event = { "InsertEnter" },
     version = '*',
 
@@ -17,12 +21,21 @@ return {
           auto_show = true,
           auto_show_delay_ms = 500,
         },
+        menu = {
+          draw = {
+            columns = { { "label", "label_description", gap = 1 }, { "kind_icon", "kind", gap = 1 } },
+          }
+        }
       },
       signature = { enabled = true },
       snippets = { preset = 'luasnip' },
       sources = {
-        default = { 'lsp', 'path', 'snippets', 'buffer' },
+        default = { 'avante', 'lsp', 'path', 'snippets', 'buffer' },
         providers = {
+          avante = {
+            module = 'blink-cmp-avante',
+            name = 'Avante',
+          },
           snippets = {
             min_keyword_length = 2,
           },
