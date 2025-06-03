@@ -74,38 +74,38 @@ return {
     },
   },
 
-  -- { -- colpilot.lua | Testing copilot suggestions
-  --   "zbirenbaum/copilot.lua",
-  --   cmd = "Copilot",
-  --   event = "InsertEnter",
-  --   config = function()
-  --     require("copilot").setup({
-  --       panel = {
-  --         enabled = true,
-  --         auto_refresh = false,
-  --         keymap = {
-  --           jump_prev = "[[",
-  --           jump_next = "]]",
-  --           accept = "<CR>",
-  --           refresh = "gr",
-  --           open = "<C-l>"
-  --         },
-  --       },
-  --       suggestion = {
-  --         enabled = true,
-  --         auto_trigger = false,
-  --         hide_during_completion = true,
-  --         debounce = 75,
-  --         keymap = {
-  --           accept = "<M-l>",
-  --           accept_word = false,
-  --           accept_line = false,
-  --           next = "<M-]>",
-  --           prev = "<M-[>",
-  --           dismiss = "<C-]>",
-  --         },
-  --       },
-  --     })
-  --   end,
-  -- },
+  { -- colpilot.lua | Testing copilot suggestions
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
+    config = function()
+      require("copilot").setup({
+        panel = {
+          enabled = true,
+          auto_refresh = false,
+          keymap = {
+            jump_prev = "[[",
+            jump_next = "]]",
+            accept = "<CR>",
+            refresh = "gr",
+            open = "<C-l>"
+          },
+        },
+        suggestion = {
+          enabled = true,
+          auto_trigger = false,
+          hide_during_completion = true,
+          debounce = 75,
+          keymap = {
+            accept = "<M-l>",
+            accept_word = false,
+            accept_line = false,
+            next = "<M-]>",
+            prev = "<M-[>",
+            dismiss = "<C-]>",
+          },
+        },
+      })
+    end,
+  },
 }
