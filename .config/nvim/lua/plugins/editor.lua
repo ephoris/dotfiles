@@ -182,13 +182,23 @@ return {
     opts = {
       animate = { enabled = false },
       bigfile = { enabled = true },
-      dashboard = { enabled = true },
+      dashboard = {
+        enabled = true,
+        sections = {
+          { section = "header" },
+          { section = "keys", gap = 0, padding = 1},
+          { icon = " ", title = "Recent Files", section = "recent_files", padding = 1},
+          { icon = " ", title = "Projects", section = "projects", padding = 1},
+          { section = "startup" },
+        },
+      },
       indent = { enabled = true, animate = { enabled = false } },
       input = { enabled = true },
       lazygit = { enabled = true },
       notifier = { enabled = true },
       picker = {
         enabled = true,
+        ui_select = true,
         layout = {
           preset = function()
             return vim.o.columns >= 120 and 'default' or 'vertical'
