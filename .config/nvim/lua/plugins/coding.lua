@@ -50,65 +50,15 @@ return {
   },
 
   {
-    "yetone/avante.nvim",
-    event = "VeryLazy",
-    version = false,
-    opts = {
-      provider = "copilot",
-    },
-    input = {
-      provider = "snacks",
-    },
-    build = "make",
+    "greggh/claude-code.nvim",
     dependencies = {
-      "nvim-treesitter/nvim-treesitter",
-      "nvim-lua/plenary.nvim",
-      "MunifTanjim/nui.nvim",
-      "folke/snacks.nvim", -- for input provider snacks
-      "zbirenbaum/copilot.lua", -- for providers='copilot'
-      {
-        -- Make sure to set this up properly if you have lazy=true
-        'MeanderingProgrammer/render-markdown.nvim',
-        opts = {
-          file_types = { "markdown", "Avante" },
-        },
-        ft = { "markdown", "Avante" },
-      },
+      "nvim-lua/plenary.nvim", -- Required for git operations
     },
-  },
-
-  { -- colpilot.lua | Testing copilot suggestions
-    "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
-    event = "InsertEnter",
+    keys = {
+        {"<leader>cc", "<Cmd>ClaudeCode<CR>", desc = "Toggle Claude Code" },
+    },
     config = function()
-      require("copilot").setup({
-        panel = {
-          enabled = true,
-          auto_refresh = false,
-          keymap = {
-            jump_prev = "[[",
-            jump_next = "]]",
-            accept = "<CR>",
-            refresh = "gr",
-            open = "<C-l>"
-          },
-        },
-        suggestion = {
-          enabled = true,
-          auto_trigger = false,
-          hide_during_completion = true,
-          debounce = 75,
-          keymap = {
-            accept = "<M-l>",
-            accept_word = false,
-            accept_line = false,
-            next = "<M-]>",
-            prev = "<M-[>",
-            dismiss = "<C-]>",
-          },
-        },
-      })
-    end,
+      require("claude-code").setup()
+    end
   },
 }

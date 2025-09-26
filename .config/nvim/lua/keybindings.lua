@@ -13,3 +13,13 @@ map('n', '<C-k>', '<C-w>k', { remap = true, desc = "Upper Window" })
 map('n', '<C-l>', '<C-w>l', { remap = true, desc = "Right Window" })
 
 map('t', '<c-,>', '<c-\\><c-n>', { desc = "Normal Mode Terminal" })
+
+-- -- LSP Specific
+-- map("n", "gk", function() vim.lsp.buf.signature_help() end, { desc = "Signature Help" })
+-- map("n", "<leader>rn", vim.lsp.buf.rename, { desc = "Rename" })
+-- map("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code Action" })
+-- map("n", "<leader>ll", function() vim.diagnostic.open_float() end, { desc = "Open Diagnostic" })
+-- map("n", "<leader>q", function() vim.diagnostic.setloclist() end, { desc = "Set Local List" })
+-- map("n", "K", function() vim.lsp.buf.hover() end, { desc = "Hover" })
+-- map("n", "[d", function() vim.diagnostic.goto_prev() end, { desc = "Prev Diagnostic" })
+-- map("n", "]d", function() vim.diagnostic.goto_next() end, { desc = "Next Diagnostic" })
