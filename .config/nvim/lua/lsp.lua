@@ -63,7 +63,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
     -- map("n", "gD", lsp.buf.declaration, opt("Go to declaration"))
     -- map("n", "gr", lsp.buf.references, opt("Show References"))
     -- map("n", "gi", function() lsp.buf.implementation({ border = "single" })  end, opt("Go to implementation"))
-    map("n", "gl", vim.diagnostic.open_float, opt("Open diagnostic in float"))
+    map("n", "<leader>ll", vim.diagnostic.open_float, opt("Open diagnostic in float"))
     -- disable the default binding first before using a custom one
     pcall(vim.keymap.del, "n", "K", { buffer = ev.buf })
     map("n", "K", function() lsp.buf.hover({ border = "single", max_height = 30, max_width = 120 }) end, opt("Toggle hover"))
