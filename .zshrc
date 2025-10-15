@@ -35,6 +35,7 @@ zstyle :bracketed-paste-magic paste-init pasteinit
 zstyle :bracketed-paste-magic paste-finish pastefinish
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+ZSH_FZF_HISTORY_SEARCH_EVENT_NUMBERS=1
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -42,6 +43,7 @@ zstyle :bracketed-paste-magic paste-finish pastefinish
 export PATH="$HOME/.local/bin:$PATH"
 
 [[ -f "$HOME/.aliases" ]] && source "$HOME/.aliases"
+alias now="date +%y%m%d%H%M"
 
 export UID=$(id -u)
 export GID=$(id -g)
