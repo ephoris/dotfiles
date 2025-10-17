@@ -4,6 +4,7 @@ local config = {
   update_in_insert = true,
   underline = true,
   severity_sort = true,
+  virtual_text = true,
 }
 vim.diagnostic.config(config)
 
@@ -43,6 +44,16 @@ vim.api.nvim_create_autocmd("LspAttach", {
       vim.bo[bufnr].tagfunc = "v:lua.vim.lsp.tagfunc"
     end
 
+    -- Enable and refresh CodeLens if supported
+    ---@diagnostic disable-next-line need-check-nil
+    if client.server_capabilities.codeLensProvider then
+      vim.lsp.codelens.refresh()
+      vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
+        buffer = bufnr,
+        callback = vim.lsp.codelens.refresh,
+      })
+    end
+
     --- Disable semantic tokens
     ---@diagnostic disable-next-line need-check-nil
     -- client.server_capabilities.semanticTokensProvider = nil
@@ -58,30 +69,20 @@ vim.api.nvim_create_autocmd("LspAttach", {
     map("n", "gk", vim.lsp.buf.signature_help, opt("Signature Help"))
     map("n", "<leader>rn", vim.lsp.buf.rename, opt("Rename"))
     map("n", "<leader>ca", vim.lsp.buf.code_action, opt("Code Action"))
-    map("n", "<leader>q", vim.diagnostic.setloclist, opt("Set Local List"))
-    -- map("n", "gd", lsp.buf.definition, opt("Go to definition"))
-    -- map("n", "gD", lsp.buf.declaration, opt("Go to declaration"))
-    -- map("n", "gr", lsp.buf.references, opt("Show References"))
-    -- map("n", "gi", function() lsp.buf.implementation({ border = "single" })  end, opt("Go to implementation"))
+    map("n", "<leader>xq", vim.diagnostic.setloclist, opt("Set Local List"))
     map("n", "<leader>ll", vim.diagnostic.open_float, opt("Open diagnostic in float"))
     -- disable the default binding first before using a custom one
     pcall(vim.keymap.del, "n", "K", { buffer = ev.buf })
     map("n", "K", function() lsp.buf.hover({ border = "single", max_height = 30, max_width = 120 }) end, opt("Toggle hover"))
-    -- map("n", "<Leader>lF", vim.cmd.FormatToggle, opt("Toggle AutoFormat"))
     map("n", "<Leader>lM", vim.cmd.Mason, opt("Mason"))
     map("n", "<Leader>lS", lsp.buf.workspace_symbol, opt("Workspace Symbols"))
     map("n", "<Leader>li", vim.cmd.LspInfo, opt("LspInfo"))
     map("n", "<Leader>cl", lsp.codelens.run, opt("Run CodeLens"))
     map("n", "<Leader>ls", lsp.buf.document_symbol, opt("Doument Symbols"))
 
-    -- map("n", "[d", function() vim.diagnostic.goto_prev() end, { desc = "Prev Diagnostic" })
-    -- map("n", "]d", function() vim.diagnostic.goto_next() end, { desc = "Next Diagnostic" })
     map("n", "]d", function() vim.diagnostic.jump({ count = 1, float = true }) end, opt("Next Diagnostic"))
     map("n", "[d", function() vim.diagnostic.jump({ count =-1, float = true }) end, opt("Prev Diagnostic"))
-    -- map("n", "<Leader>dq", vim.diagnostic.setloclist, opt("Set LocList"))
-    -- map("n", "<Leader>dv", function()
-    --   vim.diagnostic.config({ virtual_lines = not vim.diagnostic.config().virtual_lines })
-    -- end, opt("Toggle diagnostic virtual_lines"))
+
   end,
 })
 -- }}}

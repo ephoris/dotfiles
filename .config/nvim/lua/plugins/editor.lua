@@ -9,9 +9,9 @@ return {
       require('bufferline').setup()
     end,
     keys = {
-      { "<leader>t",  "<Cmd>BufferLineCycleNext<CR>",            desc = "Next Buffer" },
-      { "<leader>T",  "<Cmd>BufferLineCyclePrev<CR>",            desc = "Prev Buffer" },
-      { "<leader>x",  "<Cmd>bp|bd#<CR>",                         desc = "Close Buffer" },
+      { "<leader>t", "<Cmd>BufferLineCycleNext<CR>",             desc = "Next Buffer" },
+      { "<leader>T", "<Cmd>BufferLineCyclePrev<CR>",             desc = "Prev Buffer" },
+      { "<leader>bx", "<Cmd>bp|bd#<CR>",                         desc = "Close Buffer" },
       { "<leader>b>", "<Cmd>BufferLineMoveNext<CR>",             desc = "Move Next Buffer" },
       { "<leader>b<", "<Cmd>BufferLineMovePrev<CR>",             desc = "Move Prev Buffer" },
       { "<leader>bp", "<Cmd>BufferLinePick<CR>",                 desc = "Buffer Pick" },
@@ -79,7 +79,7 @@ return {
         end, "Prev git chunk")
 
         map('n', '<leader>gs', gs.stage_hunk, "Stage hunk")
-        map('n', '<leader>gr', gs.reset_hunk, "Reset hunk")
+        map('n', '<leader>gr', gs.reset_hunk, "Reset hun")
         map('v', '<leader>gs', function() gs.stage_hunk { vim.fn.line('.'), vim.fn.line('v') } end, "Stage hunk")
         map('v', '<leader>gr', function() gs.reset_hunk { vim.fn.line('.'), vim.fn.line('v') } end, "Reset hunk")
         map('n', '<leader>gS', gs.stage_buffer, "Stage buffer")
@@ -122,15 +122,51 @@ return {
 
   {
     "folke/which-key.nvim",
-    config = function()
-      require("which-key").setup({
-        plugins = {
-          spelling = {
-            enabled = true,
-            suggestions = 20,
-          },
+    opts = {
+      preset = "helix",
+      delay = 64,
+      plugins = {
+        spelling = {
+          enabled = true,
+          suggestions = 20,
         },
-      })
+      },
+      spec = {
+        {
+          mode = { "n", "v" },
+          { "<leader>c", group = "code" },
+          { "<leader>f", group = "file/find" },
+          { "<leader>g", group = "git" },
+          { "<leader>u", group = "ui" },
+          { "<leader>x", group = "diagnostics/quickfix" },
+          { "[", group = "prev" },
+          { "]", group = "next" },
+          { "g", group = "goto" },
+          { "gs", group = "surround" },
+          { "z", group = "fold" },
+          {
+            "<leader>b",
+            group = "buffer",
+            expand = function()
+              return require("which-key.extras").expand.buf()
+            end,
+          },
+          {
+            "<leader>w",
+            group = "windows",
+            proxy = "<c-w>",
+            expand = function()
+              return require("which-key.extras").expand.win()
+            end,
+          },
+          -- better descriptions
+          { "gx", desc = "Open with system app" },
+        },
+      },
+    },
+    config = function(_, opts)
+      local wk = require("which-key")
+      wk.setup(opts)
     end,
   },
 
@@ -153,7 +189,23 @@ return {
       require('lualine').setup({
         sections = {
           lualine_a = { 'mode' },
-          lualine_b = { 'branch', 'diff', { 'diagnostics', sources = { 'nvim_diagnostic', 'coc' } } },
+          lualine_b = {
+            'branch',
+            'diff',
+            { 'diagnostics', sources = { 'nvim_diagnostic', 'coc' } },
+            {
+              'macro',
+              fmt = function()
+                local reg = vim.fn.reg_recording()
+                if reg ~= "" then
+                  return "Recording @" .. reg
+                end
+                return nil
+              end,
+              color = { fg = "#ff9e64" },
+              draw_empty = false,
+            }
+          },
           lualine_c = { 'filename' },
           lualine_x = { 'encoding', 'fileformat', 'filetype' },
           lualine_y = { 'progress' },
@@ -178,7 +230,7 @@ return {
   {
     "nvim-treesitter/nvim-treesitter-context",
     keys = {
-      { "<leader>ut", "<cmd>TSContextToggle<cr>", desc = "Toggle Context" },
+      { "<leader>ut", "<cmd>TSContext enable<cr>", desc = "Toggle Context" },
     }
   },
 
@@ -199,12 +251,12 @@ return {
     cmd = "Trouble",
     opts = {},
     keys = {
-      { "<leader>lx", "<cmd>Trouble diagnostics toggle<cr>",                        desc = "Diagnostics (Trouble)" },
-      { "<leader>lX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",           desc = "Buffer Diagnostics (Trouble)" },
+      { "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>",                        desc = "Diagnostics (Trouble)" },
+      { "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",           desc = "Buffer Diagnostics (Trouble)" },
       { "<leader>cs", "<cmd>Trouble symbols toggle focus=false<cr>",                desc = "Symbols (Trouble)" },
       { "<leader>cL", "<cmd>Trouble lsp toggle focus=false win.position=right<cr>", desc = "LSP Definitions / references / ... (Trouble)" },
-      { "<leader>lL", "<cmd>Trouble loclist toggle<cr>",                            desc = "Location List (Trouble)" },
-      { "<leader>lQ", "<cmd>Trouble qflist toggle<cr>",                             desc = "Quickfix List (Trouble)" },
+      { "<leader>xL", "<cmd>Trouble loclist toggle<cr>",                            desc = "Location List (Trouble)" },
+      { "<leader>xQ", "<cmd>Trouble qflist toggle<cr>",                             desc = "Quickfix List (Trouble)" },
     },
   },
 
@@ -308,12 +360,18 @@ return {
           Snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>us")
           Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>uw")
           Snacks.toggle.option("relativenumber", { name = "Relative Number" }):map("<leader>uL")
+          Snacks.toggle.option("hlsearch", { name = "Search Highlight" }):map("<leader>uh")
           Snacks.toggle.diagnostics():map("<leader>ud")
           Snacks.toggle.line_number():map("<leader>ul")
           Snacks.toggle.treesitter():map("<leader>uT")
-          Snacks.toggle.inlay_hints():map("<leader>uh")
+          Snacks.toggle.inlay_hints():map("<leader>uH")
           Snacks.toggle.indent():map("<leader>ug")
           Snacks.toggle.dim():map("<leader>uD")
+          Snacks.toggle({
+            name = "Virtual Text",
+            get = function() return vim.diagnostic.config().virtual_text ~= false end,
+            set = function(state) vim.diagnostic.config({ virtual_text = state }) end,
+          }):map("<leader>uv")
         end,
       })
     end,

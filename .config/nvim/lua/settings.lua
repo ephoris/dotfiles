@@ -21,7 +21,7 @@ o.colorcolumn = '88'
 o.textwidth = 88
 o.wrap = false
 o.list = true
-o.linebreak = true
+o.linebreak = false
 
 o.hlsearch = true
 o.ignorecase = true
