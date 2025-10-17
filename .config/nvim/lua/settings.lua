@@ -8,7 +8,7 @@ o.termguicolors = true
 
 o.number = true
 o.cursorline = true
-o.cursorlineopt = 'number'
+o.cursorlineopt = 'both'
 
 o.expandtab = true
 o.tabstop = 4
