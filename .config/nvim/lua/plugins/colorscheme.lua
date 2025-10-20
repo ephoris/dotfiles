@@ -24,16 +24,16 @@ return {
 
   {
     "catppuccin/nvim",
-    config = function()
-      require("catppuccin").setup({
-        transparent_background = true
-      })
-    end
+    lazy = true,
+    opts = {
+      transparent_background = true
+    }
   },
 
   {
     "f-person/auto-dark-mode.nvim",
-    event = "VeryLazy",
+    lazy = true,
+    -- event = "VeryLazy",
     cond = function()
       return vim.loop.os_uname().sysname == "Darwin"
     end,
@@ -42,11 +42,11 @@ return {
       auto_dark_mode.setup({
         set_dark_mode = function()
           vim.api.nvim_set_option('background', 'dark')
-          vim.cmd([[colorscheme gruvbox]])
+          vim.cmd[[colorscheme gruvbox]]
         end,
         set_light_mode = function()
           vim.api.nvim_set_option('background', 'light')
-          vim.cmd([[colorscheme catppuccin-latte]])
+          vim.cmd[[colorscheme catppuccin-latte]]
         end
       })
       auto_dark_mode.init()
