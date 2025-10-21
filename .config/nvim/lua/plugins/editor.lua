@@ -56,7 +56,7 @@ return {
 
   {
     "lewis6991/gitsigns.nvim",
-    event = "VeryLazy",
+    event = { "BufReadPre", "BufNewFile" },
     opts = {
       on_attach = function(buffer)
         local gs = package.loaded.gitsigns
@@ -98,7 +98,7 @@ return {
 
   {
     "kevinhwang91/nvim-hlslens",
-    event = "VeryLazy",
+    event = { "BufFilePre", "BufNewFile" },
     keys = {
       { 'n',  [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]] },
       { 'N',  [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]] },

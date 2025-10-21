@@ -2,7 +2,7 @@ return
 {
   {
     "williamboman/mason.nvim",
-    cmd = {"Mason"},
+    cmd = { "Mason" },
     keys = {
       { "<leader>M",  "<Cmd>Mason<CR>",  desc = "Mason" },
     },
@@ -11,6 +11,7 @@ return
 
   {
     "williamboman/mason-lspconfig.nvim",
+    event = { "BufReadPre", "BufNewFile" },
     config = function() require("mason-lspconfig").setup() end
   },
 
