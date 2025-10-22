@@ -65,7 +65,10 @@ config.max_fps = 120
 config.scrollback_lines = 10000
 config.use_fancy_tab_bar = true
 config.window_background_opacity = 0.94
-config.window_content_alignment = { horizontal = 'Left', vertical = 'Center' }
+-- config.window_content_alignment = { horizontal = 'Left', vertical = 'Center' }
 config.window_padding = { left = 0, right = 0, top = 0, bottom = 0 }
+config.keys = {
+  { key="Enter", mods="SHIFT", action=wezterm.action{SendString="\x1b\r"} },
+}
 
 return config
