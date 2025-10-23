@@ -58,18 +58,35 @@ return {
     end,
   },
 
-  -- { -- nvim-ufo | For better folding
-  --   "kevinhwang91/nvim-ufo",
-  --   dependencies = "kevinhwang91/promise-async",
-  --   event = "VeryLazy",
-  --   keys = {
-  --     { 'zR', function() require('ufo').openAllFolds() end,  { desc = "Open All Folds" } },
-  --     { 'zM', function() require('ufo').closeAllFolds() end, { desc = "Close All Folds" } }
-  --   },
-  --   config = function()
-  --     require('ufo').setup()
-  --   end,
-  -- },
+  {
+    "nvim-treesitter/nvim-treesitter",
+    config = function()
+      require('nvim-treesitter.configs').setup({
+        highlight = {
+          enable = true,
+          disable = { 'latex' }
+        },
+        folds = {
+          enable = true
+        }
+      })
+      vim.o.foldmethod = 'expr'
+      vim.o.foldexpr = 'v:lua.require("nvim-treesitter.fold").foldexpr()'
+    end,
+  },
+
+  {
+    "nvim-treesitter/nvim-treesitter-context",
+    keys = {
+      { "<leader>ut", "<cmd>TSContext enable<cr>", desc = "Toggle Context" },
+    }
+  },
+
+  {
+    "folke/ts-comments.nvim",
+    opts = {},
+    event = "VeryLazy",
+  },
 
   {
     "folke/trouble.nvim",

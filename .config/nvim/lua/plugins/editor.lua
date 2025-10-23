@@ -100,12 +100,12 @@ return {
     "kevinhwang91/nvim-hlslens",
     event = { "BufFilePre", "BufNewFile" },
     keys = {
-      { 'n',  [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]] },
-      { 'N',  [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]] },
-      { '*',  [[*<Cmd>lua require('hlslens').start()<CR>]] },
-      { '#',  [[#<Cmd>lua require('hlslens').start()<CR>]] },
-      { 'g*', [[g*<Cmd>lua require('hlslens').start()<CR>]] },
-      { 'g#', [[g#<Cmd>lua require('hlslens').start()<CR>]] },
+      { 'n',  [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]], desc="Next Highlight" },
+      { 'N',  [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]], desc="Prev Highlight" },
+      { '*',  [[*<Cmd>lua require('hlslens').start()<CR>]], desc="Search Next" },
+      { '#',  [[#<Cmd>lua require('hlslens').start()<CR>]], desc="Search Prev" },
+      { 'g*', [[g*<Cmd>lua require('hlslens').start()<CR>]], desc="Search Next" },
+      { 'g#', [[g#<Cmd>lua require('hlslens').start()<CR>]], desc="Search Prev" },
     }
   },
 
@@ -136,7 +136,8 @@ return {
           { "<leader>f", group = "file/find" },
           { "<leader>g", group = "git" },
           { "<leader>u", group = "ui" },
-          { "<leader>x", group = "diagnostics/quickfix" },
+          { "<leader>x", group = "diagnostics" },
+          { "<leader>o", group = "open" },
           { "[", group = "prev" },
           { "]", group = "next" },
           { "g", group = "goto" },
@@ -242,36 +243,18 @@ return {
     end,
   },
 
-  {
-    "nvim-tree/nvim-tree.lua",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    keys = {
-      { "<leader>e", function() require("nvim-tree.api").tree.toggle() end, desc = "Nvim Tree" },
-      { "<leader>E", function() require("nvim-tree.api").tree.focus() end,  desc = "Nvim Tree" },
-    },
-    config = function()
-      require("nvim-tree").setup {}
-    end,
-  },
-
-  {
-    "nvim-treesitter/nvim-treesitter-context",
-    keys = {
-      { "<leader>ut", "<cmd>TSContext enable<cr>", desc = "Toggle Context" },
-    }
-  },
-
-  {
-    "nvim-treesitter/nvim-treesitter",
-    config = function()
-      require('nvim-treesitter.configs').setup({
-        highlight = {
-          enable = true,
-          disable = { 'latex' }
-        },
-      })
-    end,
-  },
+  -- {
+  --   "nvim-tree/nvim-tree.lua",
+  --   dependencies = { "nvim-tree/nvim-web-devicons" },
+  --   keys = {
+  --     { "<leader>e", function() require("nvim-tree.api").tree.toggle() end, desc = "Nvim Tree" },
+  --     { "<leader>E", function() require("nvim-tree.api").tree.focus() end,  desc = "Nvim Tree" },
+  --   },
+  --   config = function()
+  --     require("nvim-tree").setup {}
+  --   end,
+  -- },
+  --
 
   {
     "folke/snacks.nvim",
@@ -290,7 +273,8 @@ return {
           { section = "startup" },
         },
       },
-      indent = { enabled = true, animate = { enabled = false } },
+      explorer = { enabled = true },
+      indent = { enabled = true, animate = { enabled = true } },
       input = { enabled = true },
       lazygit = { enabled = true },
       notifier = { enabled = true },
@@ -326,7 +310,9 @@ return {
     },
     keys = function()
       return {
-        { "<leader>f{", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = "Find Config File" },
+        { "<leader>o{", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = "Open Config" },
+        { "<leader>ol", function() Snacks.lazy() end,                        desc = "Lazy" },
+        { "<leader>e",  function() Snacks.explorer() end,                    desc = "Explorer" },
         -- find
         { "<leader>fb", function() Snacks.picker.buffers() end,              desc = "Buffers" },
         { "<leader>ff", function() Snacks.picker.files() end,                desc = "Find Files" },
@@ -335,12 +321,15 @@ return {
         { "<leader>fh", function() Snacks.picker.help() end,                 desc = "Help Pages" },
         { "<leader>fc", function() Snacks.picker.command_history() end,      desc = "Command History" },
         { "<leader>fC", function() Snacks.picker.commands() end,             desc = "Commands" },
-        { "<leader>fe", function() Snacks.explorer() end,                    desc = "Commands" },
+        { "<leader>fk", function() Snacks.picker.keymaps() end,              desc = "Keymaps" },
+        { "<leader>fq", function() Snacks.picker.qflist() end,               desc = "Quickfix List" },
+        { '<leader>f"', function() Snacks.picker.registers() end,            desc = "Registers" },
         -- find via grep
         { "<leader>fl", function() Snacks.picker.lines() end,                desc = "Buffer Lines" },
         { "<leader>fB", function() Snacks.picker.grep_buffers() end,         desc = "Grep Open Buffers" },
         { "<leader>fg", function() Snacks.picker.grep() end,                 desc = "Grep" },
         { "<leader>fw", function() Snacks.picker.grep_word() end,            desc = "Visual selection or word", mode = { "n", "x" } },
+        { "<leader>/",  function() Snacks.picker.grep() end,                 desc = "Grep" },
         -- git
         { "<leader>gc", function() Snacks.picker.git_log() end,              desc = "Git Log" },
         { "<leader>gl", function() Snacks.lazygit() end,                     desc = "Lazygit" },
@@ -350,6 +339,8 @@ return {
         { "gr",         function() Snacks.picker.lsp_references() end,       desc = "References", nowait = true},
         { "gi",         function() Snacks.picker.lsp_implementations() end,  desc = "Goto Implementation" },
         { "gy",         function() Snacks.picker.lsp_type_definitions() end, desc = "Goto T[y]pe Definition" },
+        { "gai",        function() Snacks.picker.lsp_incoming_calls() end,   desc = "C[a]lls Incoming" },
+        { "gao",        function() Snacks.picker.lsp_outgoing_calls() end,   desc = "C[a]lls Outgoing" },
         { "<leader>fs", function() Snacks.picker.lsp_symbols() end,          desc = "LSP Symbols" },
         { "<leader>fd", function() Snacks.picker.diagnostics() end,          desc = "Diagnostics" },
         { "<leader>fD", function() Snacks.picker.diagnostics_buffer() end,   desc = "Buffer Diagnostics" },
@@ -357,11 +348,8 @@ return {
         { "<leader>fM", function() Snacks.picker.man() end,                  desc = "Man" },
         { "<leader>fu", function() Snacks.picker.undo() end,                 desc = "Undo History" },
         -- notifications
-        { "<leader>]",  function() Snacks.notifier.show_history() end,       desc = "Notifier History" },
+        { "<leader>f]", function() Snacks.notifier.show_history() end,       desc = "Notifier History" },
         { "<leader>un", function() Snacks.notifier.hide() end,               desc = "Dismiss All Notifications" },
-        { "<leader>,",  function() Snacks.picker.buffers() end,              desc = "Buffers" },
-        { "<leader>/",  function() Snacks.picker.grep() end,                 desc = "Grep" },
-        { "<leader>:",  function() Snacks.picker.command_history() end,      desc = "Command History" },
         { "<c-,>",      function() Snacks.terminal() end,                    desc = "Toggle Terminal" },
       }
     end,
