@@ -1,24 +1,17 @@
 return {
   {
-    "ellisonleao/gruvbox.nvim",
+    "folke/tokyonight.nvim",
     lazy = false,
     priority = 1000,
+    opts = {
+      style="night"
+    },
     config = function()
-      local api = vim.api
-      require('gruvbox').setup({
-        contrast = '',         -- [hard, soft, normal='']
-        bold = true,
-        transparent_mode = true,
-        italic = {
-          strings = false,
-          comments = false,
-          operators = false,
-          folds = true,
-        },
-        dim_inactive = false,
+      require("tokyonight").setup({
+        style="night"
       })
-      api.nvim_set_option('background', 'dark')
-      vim.cmd([[colorscheme gruvbox]])
+      vim.api.nvim_set_option('background', 'dark')
+      vim.cmd[[colorscheme tokyonight]]
     end
   },
 
@@ -42,7 +35,7 @@ return {
       auto_dark_mode.setup({
         set_dark_mode = function()
           vim.api.nvim_set_option('background', 'dark')
-          vim.cmd[[colorscheme gruvbox]]
+          vim.cmd[[colorscheme tokyonight]]
         end,
         set_light_mode = function()
           vim.api.nvim_set_option('background', 'light')
