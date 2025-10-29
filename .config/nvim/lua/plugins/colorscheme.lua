@@ -3,12 +3,10 @@ return {
     "folke/tokyonight.nvim",
     lazy = false,
     priority = 1000,
-    opts = {
-      style="night"
-    },
     config = function()
       require("tokyonight").setup({
-        style="night"
+        style="night",
+        transparent = true,
       })
       vim.api.nvim_set_option('background', 'dark')
       vim.cmd[[colorscheme tokyonight]]
@@ -16,17 +14,8 @@ return {
   },
 
   {
-    "catppuccin/nvim",
-    lazy = true,
-    opts = {
-      transparent_background = true
-    }
-  },
-
-  {
     "f-person/auto-dark-mode.nvim",
-    lazy = true,
-    -- event = "VeryLazy",
+    event = "VeryLazy",
     cond = function()
       return vim.loop.os_uname().sysname == "Darwin"
     end,
@@ -39,7 +28,7 @@ return {
         end,
         set_light_mode = function()
           vim.api.nvim_set_option('background', 'light')
-          vim.cmd[[colorscheme catppuccin-latte]]
+          vim.cmd[[colorscheme tokyonight-day]]
         end
       })
       auto_dark_mode.init()

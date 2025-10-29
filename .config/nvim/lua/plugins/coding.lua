@@ -71,7 +71,7 @@ return {
         }
       })
       vim.o.foldmethod = 'expr'
-      vim.o.foldexpr = 'v:lua.require("nvim-treesitter.fold").foldexpr()'
+      vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
     end,
   },
 

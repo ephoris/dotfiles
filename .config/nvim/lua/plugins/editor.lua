@@ -243,19 +243,6 @@ return {
     end,
   },
 
-  -- {
-  --   "nvim-tree/nvim-tree.lua",
-  --   dependencies = { "nvim-tree/nvim-web-devicons" },
-  --   keys = {
-  --     { "<leader>e", function() require("nvim-tree.api").tree.toggle() end, desc = "Nvim Tree" },
-  --     { "<leader>E", function() require("nvim-tree.api").tree.focus() end,  desc = "Nvim Tree" },
-  --   },
-  --   config = function()
-  --     require("nvim-tree").setup {}
-  --   end,
-  -- },
-  --
-
   {
     "folke/snacks.nvim",
     priority = 1000,
@@ -313,6 +300,7 @@ return {
         { "<leader>oc", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = "Open Config" },
         { "<leader>ol", function() Snacks.lazy() end,                        desc = "Lazy" },
         { "<leader>e",  function() Snacks.explorer() end,                    desc = "Explorer" },
+        { "<leader>uC", function() Snacks.picker.colorschemes() end,         desc = "Colorscheme with Preview" },
         -- find
         { "<leader>fb", function() Snacks.picker.buffers() end,              desc = "Buffers" },
         { "<leader>ff", function() Snacks.picker.files() end,                desc = "Find Files" },

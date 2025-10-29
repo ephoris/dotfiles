@@ -22,8 +22,6 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 vim.lsp.config("*", {
   capabilities = capabilities,
-  -- on_attach = function(client, bufnr)
-  -- end,
 })
 -- }}}
 
