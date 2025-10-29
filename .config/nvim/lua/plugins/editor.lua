@@ -310,7 +310,7 @@ return {
     },
     keys = function()
       return {
-        { "<leader>o{", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = "Open Config" },
+        { "<leader>oc", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = "Open Config" },
         { "<leader>ol", function() Snacks.lazy() end,                        desc = "Lazy" },
         { "<leader>e",  function() Snacks.explorer() end,                    desc = "Explorer" },
         -- find
