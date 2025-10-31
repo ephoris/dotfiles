@@ -277,17 +277,32 @@ return {
           default = {
             layout = {
               box = "horizontal",
-              width = 0.9,
               min_width = 120,
+              width = 0.9,
               height = 0.9,
               {
                 box = "vertical",
-                border = "rounded",
+                border = true,
                 title = "{title} {live} {flags}",
                 { win = "input", height = 1, border = "bottom" },
                 { win = "list", border = "none" },
               },
               { win = "preview", title = "{preview}", border = "rounded", width = 0.6 },
+            },
+          },
+          vertical = {
+            layout = {
+              backdrop = true,
+              width = 0.9,
+              height = 0.9,
+              min_height = 30,
+              box = "vertical",
+              border = true,
+              title = "{title} {live} {flags}",
+              title_pos = "center",
+              { win = "input", height = 1, border = "bottom" },
+              { win = "list", border = "none" },
+              { win = "preview", title = "{preview}", height = 0.6, border = "top" },
             },
           },
         },
@@ -342,7 +357,6 @@ return {
       }
     end,
     init = function()
-      -- vim.opt.listchars:append('lead:·')
       vim.api.nvim_create_autocmd("User", {
         pattern = "VeryLazy",
         callback = function()
@@ -355,6 +369,7 @@ return {
           Snacks.toggle.inlay_hints():map("<leader>uH")
           Snacks.toggle.indent():map("<leader>ug")
           Snacks.toggle.dim():map("<leader>uD")
+          Snacks.toggle.animate():map("<leader>ua")
           Snacks.toggle({
             name = "Virtual Text",
             get = function() return vim.diagnostic.config().virtual_text ~= false end,
