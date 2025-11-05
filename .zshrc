@@ -35,18 +35,23 @@ zstyle :bracketed-paste-magic paste-init pasteinit
 zstyle :bracketed-paste-magic paste-finish pastefinish
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-ZSH_FZF_HISTORY_SEARCH_EVENT_NUMBERS=1
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-export PATH="$HOME/.local/bin:$PATH"
-
 [[ -f "$HOME/.aliases" ]] && source "$HOME/.aliases"
 alias now="date +%y%m%d%H%M"
+if command -v eza &> /dev/null; then
+    alias ls='eza'
+fi
 
+if command -v bat &> /dev/null; then
+    export PAGER="bat -S"
+else
+    export PAGER="less -S"
+fi
 export UID=$(id -u)
 export GID=$(id -g)
+export HOMEBREW_NO_ENV_HINTS=1
+export ZSH_FZF_HISTORY_SEARCH_EVENT_NUMBERS=1
+export PATH="$HOME/.local/bin:$PATH"
 
 setopt ignore_eof
-PAGER="less -S"
+
