@@ -5,6 +5,7 @@ return {
       'Kaiser-Yang/blink-cmp-avante',
       'rafamadriz/friendly-snippets',
       'L3MON4D3/LuaSnip',
+      'nvim-mini/mini.icons',
     },
     event = { "InsertEnter" },
     version = '*',
@@ -23,7 +24,26 @@ return {
         },
         menu = {
           draw = {
-            columns = { { "label", "label_description", gap = 1 }, { "kind_icon", "kind", gap = 1 } },
+            components = {
+              kind_icon = {
+                text = function(ctx)
+                  local kind_icon, _, _ = require('mini.icons').get('lsp', ctx.kind)
+                  return kind_icon
+                end,
+                -- (optional) use highlights from mini.icons
+                highlight = function(ctx)
+                  local _, hl, _ = require('mini.icons').get('lsp', ctx.kind)
+                  return hl
+                end,
+              },
+              kind = {
+                -- (optional) use highlights from mini.icons
+                highlight = function(ctx)
+                  local _, hl, _ = require('mini.icons').get('lsp', ctx.kind)
+                  return hl
+                end,
+              }
+            }
           }
         }
       },
