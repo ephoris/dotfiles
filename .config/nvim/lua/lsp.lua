@@ -1,30 +1,4 @@
--- Looted from https://github.com/Rishabh672003/Neovim/blob/main/lua/rj/lsp.lua
-
-local config = {
-  update_in_insert = true,
-  underline = true,
-  severity_sort = true,
-  virtual_text = true,
-}
-vim.diagnostic.config(config)
-
--- Lsp capabilities and on_attach {{{
--- Here we grab default Neovim capabilities and extend them with ones we want on top
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-
-capabilities.textDocument.foldingRange = {
-  dynamicRegistration = true,
-  lineFoldingOnly = true,
-}
-
-capabilities.textDocument.semanticTokens.multilineTokenSupport = true
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-
-vim.lsp.config("*", {
-  capabilities = capabilities,
-})
--- }}}
-
+-- {{{ Looted from https://github.com/Rishabh672003/Neovim/blob/main/lua/rj/lsp.lua
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(ev)
     local bufnr = ev.buf
@@ -52,10 +26,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
       })
     end
 
-    --- Disable semantic tokens
-    ---@diagnostic disable-next-line need-check-nil
-    -- client.server_capabilities.semanticTokensProvider = nil
-
     -- All the keymaps
     -- stylua: ignore start
     local map = vim.keymap.set
@@ -72,7 +42,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
     -- disable the default binding first before using a custom one
     pcall(vim.keymap.del, "n", "K", { buffer = ev.buf })
     map("n", "K", function() lsp.buf.hover({ border = "single", max_height = 30, max_width = 120 }) end, opt("Toggle hover"))
-    map("n", "<Leader>lM", vim.cmd.Mason, opt("Mason"))
     map("n", "<Leader>lS", lsp.buf.workspace_symbol, opt("Workspace Symbols"))
     map("n", "<Leader>li", vim.cmd.LspInfo, opt("LspInfo"))
     map("n", "<Leader>cl", lsp.codelens.run, opt("Run CodeLens"))
@@ -85,3 +54,36 @@ vim.api.nvim_create_autocmd("LspAttach", {
 })
 -- }}}
 
+-- {{{ Lsp capabilities and diagnostic
+local config = {
+  update_in_insert = true,
+  underline = true,
+  severity_sort = true,
+  virtual_text = true,
+}
+vim.diagnostic.config(config)
+
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+
+capabilities = vim.tbl_deep_extend(
+  'force', capabilities, require('blink.cmp').get_lsp_capabilities({}, false)
+)
+capabilities = vim.tbl_deep_extend('force', capabilities, {
+  textDocument = {
+    foldingRange = {
+      dynamicRegistration = false,
+      lineFoldingOnly = true
+    },
+    semanticTokens = {
+      multilineTokenSupport = true,
+    },
+    completion = {
+      completionItem = {
+        snippetSupport = true
+      }
+    },
+  }
+})
+
+vim.lsp.config("*", { capabilities = capabilities })
+-- }}}
