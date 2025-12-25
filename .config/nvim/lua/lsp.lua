@@ -1,4 +1,22 @@
--- {{{ Looted from https://github.com/Rishabh672003/Neovim/blob/main/lua/rj/lsp.lua
+
+-- {{{ Lsp capabilities and diagnostic
+local config = {
+  update_in_insert = true,
+  underline = true,
+  severity_sort = true,
+  virtual_text = true,
+}
+vim.diagnostic.config(config)
+
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = vim.tbl_deep_extend(
+  'force', capabilities, require('blink.cmp').get_lsp_capabilities({}, false)
+)
+
+vim.lsp.config("*", { capabilities = capabilities })
+-- }}}
+
+-- {{{ https://github.com/Rishabh672003/Neovim/blob/main/lua/rj/lsp.lua
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(ev)
     local bufnr = ev.buf
@@ -52,38 +70,4 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
   end,
 })
--- }}}
-
--- {{{ Lsp capabilities and diagnostic
-local config = {
-  update_in_insert = true,
-  underline = true,
-  severity_sort = true,
-  virtual_text = true,
-}
-vim.diagnostic.config(config)
-
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-
-capabilities = vim.tbl_deep_extend(
-  'force', capabilities, require('blink.cmp').get_lsp_capabilities({}, false)
-)
-capabilities = vim.tbl_deep_extend('force', capabilities, {
-  textDocument = {
-    foldingRange = {
-      dynamicRegistration = false,
-      lineFoldingOnly = true
-    },
-    semanticTokens = {
-      multilineTokenSupport = true,
-    },
-    completion = {
-      completionItem = {
-        snippetSupport = true
-      }
-    },
-  }
-})
-
-vim.lsp.config("*", { capabilities = capabilities })
 -- }}}

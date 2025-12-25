@@ -43,13 +43,11 @@ return {
         },
         lualine_c = { 'filename' },
         lualine_x = { 'filetype' },
-        lualine_y = { 'progress' },
+        lualine_y = { 'progress', 'lsp_status' },
         lualine_z = { 'location', 'hostname' },
       },
     }
 
-    -- do not add trouble symbols if aerial is enabled
-    -- And allow it to be overriden for some buffer types (see autocmds)
     if vim.g.trouble_lualine then
       local trouble = require("trouble")
       local symbols = trouble.statusline({
