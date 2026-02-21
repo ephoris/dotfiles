@@ -1,15 +1,18 @@
 return {
   {
-    "folke/tokyonight.nvim",
-    lazy = false,
+    "catppuccin/nvim",
+    name = "catppuccin",
     priority = 1000,
     config = function()
-      require("tokyonight").setup({
-        style="night",
-        transparent = true,
+      require("catppuccin").setup({
+        background = {
+            light = "latte",
+            dark = "macchiato",
+        },
+        transparent_background = true,
       })
       vim.api.nvim_set_option('background', 'dark')
-      vim.cmd[[colorscheme tokyonight]]
+      vim.cmd [[colorscheme catppuccin]]
     end
   },
 
@@ -24,11 +27,11 @@ return {
       auto_dark_mode.setup({
         set_dark_mode = function()
           vim.api.nvim_set_option('background', 'dark')
-          vim.cmd[[colorscheme tokyonight]]
+          vim.cmd [[colorscheme catppuccin-macchiato]]
         end,
         set_light_mode = function()
           vim.api.nvim_set_option('background', 'light')
-          vim.cmd[[colorscheme tokyonight-day]]
+          vim.cmd [[colorscheme catppuccin-latte]]
         end
       })
       auto_dark_mode.init()
