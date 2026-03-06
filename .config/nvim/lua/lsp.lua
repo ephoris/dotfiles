@@ -27,7 +27,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
     ---@diagnostic disable-next-line need-check-nil
     if client.server_capabilities.completionProvider then
       vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
-      -- vim.bo[bufnr].omnifunc = "v:lua.MiniCompletion.completefunc_lsp"
     end
     ---@diagnostic disable-next-line need-check-nil
     if client.server_capabilities.definitionProvider then
