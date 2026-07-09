@@ -5,17 +5,13 @@ local LazyUtil = require("lazy.core.util")
 ---@field lsp util.lsp
 ---@field root util.root
 ---@field terminal util.terminal
----@field lualine util.lualine
 ---@field mini util.mini
----@field cmp util.cmp
 local M = {}
 
 _G.Util = M
 
 -- Explicitly load sub-modules
-M.cmp = require("util.cmp")
 M.lsp = require("util.lsp")
-M.lualine = require("util.lualine")
 M.mini = require("util.mini")
 M.root = require("util.root")
 

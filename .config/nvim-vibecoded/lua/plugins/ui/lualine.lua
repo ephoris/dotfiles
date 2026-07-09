@@ -36,7 +36,12 @@ return {
           lualine_b = { "branch" },
 
           lualine_c = {
-            Util.lualine.root_dir(),
+            {
+              function()
+                return "󱉭 " .. vim.fs.basename(Snacks.git.get_root() or vim.uv.cwd())
+              end,
+              color = function() return { fg = Snacks.util.color("Special") } end,
+            },
             {
               "diagnostics",
               symbols = {
@@ -47,7 +52,7 @@ return {
               },
             },
             { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
-            { Util.lualine.pretty_path() },
+            { "filename", path = 1 },
           },
           lualine_x = {
             Snacks.profiler.status(),
