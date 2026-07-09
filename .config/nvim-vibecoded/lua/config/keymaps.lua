@@ -112,23 +112,11 @@ map("n", "]q", vim.cmd.cnext, { desc = "Next Quickfix" })
 -- formatting
 map({ "n", "x" }, "<leader>cf", "<cmd>Format<cr>", { desc = "Format" })
 
--- diagnostic
-local diagnostic_goto = function(next, severity)
-  return function()
-    vim.diagnostic.jump({
-      count = (next and 1 or -1) * vim.v.count1,
-      severity = severity and vim.diagnostic.severity[severity] or nil,
-      float = true,
-    })
-  end
-end
 map("n", "<leader>cd", vim.diagnostic.open_float, { desc = "Line Diagnostics" })
-map("n", "]d", diagnostic_goto(true), { desc = "Next Diagnostic" })
-map("n", "[d", diagnostic_goto(false), { desc = "Prev Diagnostic" })
-map("n", "]e", diagnostic_goto(true, "ERROR"), { desc = "Next Error" })
-map("n", "[e", diagnostic_goto(false, "ERROR"), { desc = "Prev Error" })
-map("n", "]w", diagnostic_goto(true, "WARN"), { desc = "Next Warning" })
-map("n", "[w", diagnostic_goto(false, "WARN"), { desc = "Prev Warning" })
+map("n", "]d", function() vim.diagnostic.jump({ count = 1 }) end, { desc = "Next Diagnostic" })
+map("n", "[d", function() vim.diagnostic.jump({ count = -1 }) end, { desc = "Prev Diagnostic" })
+map("n", "]e", function() vim.diagnostic.jump({ count = 1, severity = "ERROR" }) end, { desc = "Next Error" })
+map("n", "[e", function() vim.diagnostic.jump({ count = -1, severity = "ERROR" }) end, { desc = "Prev Error" })
 
 -- stylua: ignore start
 
@@ -179,8 +167,8 @@ map("n", "<leader>uI", function() vim.treesitter.inspect_tree() vim.api.nvim_inp
 -- floating terminal
 map("n", "<leader>fT", function() Snacks.terminal() end, { desc = "Terminal (cwd)" })
 map("n", "<leader>ft", function() Snacks.terminal(nil, { cwd = Util.root() }) end, { desc = "Terminal (Root Dir)" })
-map({"n","t"}, "<c-/>",function() Snacks.terminal(nil, { cwd = Util.root() }) end, { desc = "Terminal (Root Dir)" })
-map({"n","t"}, "<c-_>",function() Snacks.terminal(nil, { cwd = Util.root() }) end, { desc = "which_key_ignore" })
+map({"n","t"}, "<c-/>",function() Snacks.terminal.focus(nil, { cwd = Util.root() }) end, { desc = "Terminal (Root Dir)" })
+map({"n","t"}, "<c-_>",function() Snacks.terminal.focus(nil, { cwd = Util.root() }) end, { desc = "which_key_ignore" })
 
 -- windows
 map("n", "<leader>-", "<C-W>s", { desc = "Split Window Below", remap = true })

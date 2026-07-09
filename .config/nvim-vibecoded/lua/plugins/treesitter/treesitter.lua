@@ -65,8 +65,8 @@ return {
           if vim.bo[buf].buftype ~= "" then
             return
           end
-          local ok_ts, _ = pcall(vim.treesitter.get_parser, buf)
-          if ok_ts then
+          local ok_ts, parser = pcall(vim.treesitter.get_parser, buf)
+          if ok_ts and parser then
             -- Enable highlighting
             vim.treesitter.start(buf)
             -- Use treesitter for folding and indents

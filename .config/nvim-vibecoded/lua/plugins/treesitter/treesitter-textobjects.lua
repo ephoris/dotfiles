@@ -27,7 +27,8 @@ return {
       TS.setup(opts)
 
       local function attach(buf)
-        local has_ts, _ = pcall(vim.treesitter.get_parser, buf)
+        local ok, parser = pcall(vim.treesitter.get_parser, buf)
+        local has_ts = ok and parser ~= nil
         if not (vim.tbl_get(opts, "move", "enable") and has_ts) then
           return
         end

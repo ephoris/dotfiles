@@ -89,10 +89,6 @@ function M.load(name)
     end
   end
   local pattern = "Util" .. name:sub(1, 1):upper() .. name:sub(2)
-  -- always load config, then user file
-  if M.defaults[name] or name == "options" then
-    _load("config." .. name)
-  end
   _load("config." .. name)
   if vim.bo.filetype == "lazy" then
     -- HACK: Util may have overwritten options of the Lazy ui, so reset this here

@@ -149,8 +149,11 @@ return {
       local mlsp = require("mason-lspconfig")
       local all_msons = vim.tbl_keys(require("mason-lspconfig.mappings").get_mason_map().lspconfig_to_package)
 
+      local names = vim.tbl_keys(opts.servers) ---@type string[]
+      table.sort(names)
       local ensure_installed = {}
-      for server, server_opts in pairs(opts.servers) do
+      for _, server in ipairs(names) do
+        local server_opts = opts.servers[server]
         if server_opts then
           server_opts = server_opts == true and {} or server_opts
           vim.lsp.config(server, server_opts)

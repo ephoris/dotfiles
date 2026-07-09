@@ -66,8 +66,8 @@ M.treesitter = {}
 ---@param buf? number
 ---@return boolean
 function M.treesitter.have(buf)
-  local ok, _ = pcall(vim.treesitter.get_parser, buf or 0)
-  return ok
+  local ok, parser = pcall(vim.treesitter.get_parser, buf or 0)
+  return ok and parser ~= nil
 end
 
 function M.is_win()

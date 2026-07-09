@@ -11,6 +11,7 @@ return {
         light = "latte",
         dark = "mocha",
       },
+      transparent_background = true,
       integrations = {
         blink_cmp = true,
         gitsigns = true,
